@@ -1,0 +1,222 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  shairport.c
+ *
+ *    Description:  
+ *
+ *        Version:  1.0
+ *        Created:  01/25/2016 05:20:17 PM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  YOUR NAME (), 
+ *   Organization:  
+ *
+ * =====================================================================================
+ */
+
+/*=====================================================================================+
+ | Included Files                                                                      |
+ +=====================================================================================*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <pthread.h>
+#include <time.h>
+#include <string.h>
+#include <net/if.h>
+#include <netinet/in.h>
+#include <sys/ioctl.h>
+
+#include "include/mtc.h"
+#include "include/mtc_proc.h"
+
+/*=====================================================================================+
+ | Define                                                                              |
+ +=====================================================================================*/
+
+#define DAEMON_BIN "/usr/sbin/shairport"
+#define DAEMON_PID_FILE "/var/air.pid"
+
+#define UPMPDCLI_BIN "/usr/bin/upmpdcli"
+#define UPMPDCLI_NAME "upmpdcli"
+#define BR0_PID_FILE "/var/run/upmpdcli.br0"
+#define BR1_PID_FILE "/var/run/upmpdcli.br1"
+
+typedef struct {
+    const char *callname;
+    int (*exec_main)(int argc, char *argv[]);
+} montage_rc_init_t;
+
+/*=====================================================================================+
+ | Variables                                                                           |
+ +=====================================================================================*/
+
+/*=====================================================================================+
+ | Function Prototypes                                                                 |
+ +=====================================================================================*/
+
+/*=====================================================================================+
+ | Extern Function/Variables                                                           |
+ +=====================================================================================*/
+
+extern MtcData *mtc;
+
+/*=====================================================================================+
+ | Functions                                                                           |
+ +=====================================================================================*/
+
+int chk_wanip(void)
+{
+    int fd;
+    struct ifreq ifr;
+
+    fd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    memset(&ifr, 0, sizeof ifr);
+    ifr.ifr_addr.sa_family = AF_INET;
+
+    strncpy(ifr.ifr_name, "br1", IFNAMSIZ-1);
+
+    ioctl(fd, SIOCGIFADDR, &ifr);
+
+    close(fd);
+
+    if((((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr).s_addr == 0) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
+
+ static int start(void)
+{
+	char *Codec[] = {
+        "ES9023",
+        "USB Audio",
+        NULL
+    };
+    int  hasCodec = 0;
+    char **pCodec = Codec;
+    char shairport_args[BUF_SIZE];
+    int ra_func;
+    char ra_name[BUF_SIZE];
+    char buffer[4];
+    char tmp[BUF_SIZE];
+    unsigned char val[6];
+   	char cmd[128]={0};
+    char *ptr;
+
+    ra_func = cdb_get_int("$ra_func", 0);
+    if ((ra_func != 2) && (ra_func != 4)) {
+        return 0;
+    }
+
+    cdb_get_str("$ra_name", ra_name, sizeof(ra_name), "");
+    if ((ptr = strstr(ra_name, "_%6x"))) {
+        boot_cdb_get("mac0", tmp);
+        sscanf(tmp, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &val[0], &val[1], &val[2], &val[3], &val[4], &val[5]);
+        sprintf(++ptr, "%2.2x%2.2x%2.2x", val[3], val[4], val[5]);
+        cdb_set("$ra_name", ra_name);
+    }
+    if (strlen(ra_name) <= 0) {
+        strcpy(ra_name, "AirPort");
+    }
+    
+    snprintf(cmd,  BUF_SIZE, "uci set xzxwifiaudio.config.audioname=\"%s\"", ra_name);
+    exec_cmd(cmd);
+   	exec_cmd("uci commit");
+
+    cdb_get_str("$ra_air_buf", buffer, sizeof(buffer), "");
+    if (strlen(buffer) <= 0) {
+        strcpy(buffer, "256");
+    }
+
+    cdb_get_str("$mpd_codec_info", tmp, sizeof(tmp), "");
+    while (*pCodec) {
+        if (strstr(tmp, *pCodec++)) {
+            hasCodec = 1;
+            break;
+        }
+    }
+    if (hasCodec) {
+        int card = 0;
+        int device = 0;
+        sscanf(tmp, "card %d: %*[^,], device %d:", &card, &device);
+        sprintf(tmp, "-d plughw:%d,%d", card, device);
+    }
+    else if (strstr(tmp, "tas5711")) {
+        sprintf(tmp, "-t hardware -c Master");
+    }
+    else {
+        sprintf(tmp, "-t hardware -c PCM");
+    }
+    // -a : name
+    // -b : buffer
+    // -p : password
+    // -o : port
+    sprintf(shairport_args, "-a \"%s\" -b %s -- %s", ra_name, buffer, tmp);
+    exec_cmd2("start-stop-daemon -S -N -10 -x %s -b -m -p %s -- %s 2>/dev/null", 
+                DAEMON_BIN, DAEMON_PID_FILE, shairport_args);
+
+    cdb_set("$air_nocheck", "0");
+
+    if (f_exists(UPMPDCLI_BIN)) {
+        if ((get_pid_by_name(UPMPDCLI_NAME) > 0)) {
+            exec_cmd("killall -s KILL " UPMPDCLI_NAME);
+        }
+        exec_cmd2(UPMPDCLI_BIN " -h 127.0.0.1 -f \"%s\" -i br0 -D", ra_name);
+
+        if (chk_wanip()) {
+            if ((mtc->rule.OMODE == opMode_client) || (mtc->rule.OMODE == opMode_wi)) {
+                exec_cmd2(UPMPDCLI_BIN " -h 127.0.0.1 -f \"%s\" -i br1 -D", ra_name);
+            }
+        }
+    }
+
+    return 0;
+}
+
+static int stop(void)
+{
+    cdb_set("$air_nocheck", "1");
+
+    if(f_exists(DAEMON_PID_FILE) ) {
+        exec_cmd("start-stop-daemon -K -q -p " DAEMON_PID_FILE " -s TERM");
+        unlink(DAEMON_PID_FILE);
+    }
+
+	system("killall -s USR1 upmpdcli");
+    if( f_exists(BR0_PID_FILE) ) {
+        exec_cmd("start-stop-daemon -K -q -p " BR0_PID_FILE " -s TERM");
+        unlink(BR0_PID_FILE);
+    }
+    if( f_exists(BR1_PID_FILE) ) {
+        exec_cmd("start-stop-daemon -K -q -p " BR1_PID_FILE " -s TERM");
+        unlink(BR1_PID_FILE);
+    }
+
+    return 0;
+}
+
+static montage_sub_proc_t sub_proc[] = {
+    { "boot",  start },
+    { "start", start },
+    { "stop",  stop  },
+    { .cmd = NULL    }
+};
+
+int shairport_main(montage_proc_t *proc, char *cmd)
+{
+    MTC_INIT_SUB_PROC(proc);
+    MTC_SUB_PROC(sub_proc, cmd);
+    return 0;
+}
+

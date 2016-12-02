@@ -1,0 +1,96 @@
+#!/bin/sh
+. /etc/cdb.sh
+
+omnicfg_cdb_get()
+{
+	cdb_data=""
+	[ $# -lt 2 ] && echo usage: omnicfg_cdb_get output_variable default_value && exit 1
+
+	config_get cdb_data "$1"
+	cdb_data=$( config_chk "$cdb_data" )
+	[ -z "$cdb_data" ] && cdb_data="$2"
+
+	echo $cdb_data
+}
+
+trigger()
+{
+	/lib/wdk/omnicfg voice trigger
+	
+	config_get omicfg_sniffer_enable omicfg_sniffer_enable
+	[ "$omicfg_sniffer_enable" == "1" ] && wd smrtcfg stop
+	killall omnicfg
+	killall omnicfg_apply
+
+	config_get omicfg_log_mode omicfg_log_mode
+	[ "$omicfg_log_mode" -gt "0" ] && killall syslogd
+
+	lock /tmp/.omicfg
+	config_get op_work_mode op_work_mode
+	[ $op_work_mode -gt 1 ] && cdbak save
+	lock -u /tmp/.omicfg
+
+	config_set op_work_mode 1
+	config_set omicfg_config_enable 1
+	config_set omi_result 0
+	config_set omi_restore_apply 0
+	config_get omicfg_group_cmd_en omicfg_group_cmd_en
+	if [ "$omicfg_group_cmd_en" -gt "0" ]
+	then
+		config_set omi_config_mode 1
+		config_set omicfg_sniffer_enable 1
+	fi
+
+	#[ "$omicfg_log_mode" -gt "0" ] && syslogd -cn | gzip > /tmp/omnicfg_log.gz &
+	echo "start_log!!!!!!!!!!!!!!!" > /dev/console
+	/lib/wdk/omnicfg start_log
+	echo "start_log done!!!!!!!!!!!!!!!" > /dev/console
+
+	if [ -f "/var/run/omni_count" ]; then
+		OMNI_COUNT=`cat /var/run/omni_count`
+		OMNI_COUNT=`expr $OMNI_COUNT + 1`
+		echo $OMNI_COUNT > /var/run/omni_count
+	else
+		echo "1" > /var/run/omni_count
+		OMNI_COUNT=1
+	fi
+
+	logger [omnicfg_ctrl]trigger OMNI_COUNT=$OMNI_COUNT
+
+	#/etc/init.d/ocfg stop
+	mtc_cli ocfg stop
+	#/etc/init.d/wlan stop
+	mtc_cli wl stop
+	killall hostapd
+	#/etc/init.d/wan stop
+	mtc_cli wan stop
+	#/etc/init.d/workmode restart
+	mtc_cli op restart
+	#/etc/init.d/wlan start
+	mtc_cli wl start
+	#/etc/init.d/ocfg start
+	mtc_cli ocfg start
+
+	exit 0	
+}	
+
+query()
+{
+	omi_result=$( omnicfg_cdb_get omi_result '0' )
+	omicfg_enable=$( omnicfg_cdb_get omicfg_enable '0' )
+	omi_config_mode=$( omnicfg_cdb_get omi_config_mode '0' )
+	op_work_mode=$( omnicfg_cdb_get op_work_mode '0' )
+	omi_work_mode=$( omnicfg_cdb_get omi_work_mode '0' )
+
+	echo $omi_result $omicfg_enable $omi_config_mode $op_work_mode $omi_work_mode > /tmp/omnicfg_status.tmp
+	mv -f /tmp/omnicfg_status.tmp /tmp/omnicfg_status
+	
+	echo $omi_result $omicfg_enable $omi_config_mode $op_work_mode $omi_work_mode
+	
+	exit 0
+}
+
+case $1 in
+	"trigger") trigger;;
+	"query")   query;;
+esac

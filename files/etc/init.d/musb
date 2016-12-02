@@ -1,0 +1,109 @@
+#!/bin/sh
+
+_modeswitch()
+{
+	# check control interface except root-hub
+	find /sys/devices/platform -name bNumEndpoints | grep -v "1-0:1.0" | while read file
+	do
+		export "ACTION=add"
+		file=${file%/bNumEndpoints}
+		export "DEVPATH=${file#/sys}"
+		/etc/hotplug.d/usb/20-modeswitch
+	done
+}
+
+_modem()
+{
+	find /sys/devices/platform -name ttyUSB\* | grep tty\/ttyUSB | while read file
+	do
+		export "ACTION=add"
+		export "DEVPATH=${file#/sys}"
+		export "DEVNAME=${file##/*/}"
+		/etc/hotplug.d/tty/30-3g_modem
+	done
+}
+
+_usbnic()
+{
+	ls -l /sys/class/net | grep usb | while read file
+	do
+		export "ACTION=add"
+		export "DEVPATH=${file#*../..}"
+		export "INTERFACE=${file##*/}"
+		/etc/hotplug.d/net/30-usbnic
+	done
+}
+
+_cdcwdm()
+{
+	ls -l /sys/class/usb | grep cdc-wdm | while read file
+	do
+		export "ACTION=add"
+		export "DEVPATH=$file"
+		/etc/hotplug.d/usb/cdc-wdm
+	done
+}
+
+_storage()
+{
+	# check any usb storage
+	find /sys/devices/platform -name 'sd[a-z]' | while read file
+	do
+		export "ACTION=add"
+		export "DEVPATH=${file#/sys}"
+		export "DEVNAME=${file##/*/}"
+		export "DEVTYPE=disk"
+		/etc/hotplug.d/block/90-storage
+	done
+	# check any mmc storage
+	find /sys/devices/platform -name 'mmcblk[0-9]' | while read file
+	do
+		export "ACTION=add"
+		export "DEVPATH=${file#/sys}"
+		export "DEVNAME=${file##/*/}"
+		export "DEVTYPE=disk"
+		/etc/hotplug.d/block/90-storage
+		break
+	done
+}
+
+_soundcard()
+{
+	rule=`aplay -l | grep "USB Audio"]$`
+	[ -z $rule ] && {
+		export "ACTION=remove"
+	} || {
+		export "ACTION=add"
+	}
+	/etc/hotplug.d/usb_device/soundcard
+}
+
+_webcam()
+{
+	export "ACTION=add"
+	export "MAJOR=189" #define in include/linux/usb.h
+	find /sys/dev/char/ -name 189:\* | while read num
+	do
+		export "MINOR=${num##/*/189:}"
+		/etc/hotplug.d/usb_device/webcam
+	done
+}
+
+action=$1
+case $action in
+    modeswitch)
+        _modeswitch ;;
+    modem)
+        _modem ;;
+    usbnic)
+        _usbnic ;;
+    cdcwdm)
+        _cdcwdm ;;
+    storage)
+        _storage ;;
+    soundcard)
+        _soundcard ;;
+    webcam)
+        _webcam ;;
+esac
+

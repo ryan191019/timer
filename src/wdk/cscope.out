@@ -1,0 +1,10784 @@
+cscope 15 /ssd/nachen/openwrt/camelot/package/zmtc/src/wdk -q 0000000629 0000064448
+	@ap.c
+
+1 
+	~"wdk.h
+"
+
+4 
+	$wdk_≠
+(
+¨gc
+, **
+¨gv
+)
+
+6 i‡(
+¨gc
+ < 1 ||árgc > 2)
+
+9 i‡(
+	`°r_equÆ
+(
+¨gv
+[0], "scan")) {
+
+10 
+	`sy°em
+("ifconfig sta0 up");
+
+12 
+	`sy°em
+("iw dev sta0 scan");
+
+13 } i‡(
+	`°r_equÆ
+(
+¨gv
+[0], "result")) {
+
+17 
+	`sy°em
+("cd /;echo scan_results > /proc/wd;cat /proc/wd");
+
+18 
+	`dump_fûe
+("/etc/res");
+
+19 
+	`sy°em
+("rm /etc/res");
+
+23 
+	}
+}
+
+	@cdbreset.c
+
+1 
+	~"wdk.h
+"
+
+4 
+	$wdk_cdbª£t
+(
+¨gc
+, **
+¨gv
+)
+
+6 i‡(
+¨gc
+ != 0)
+
+9 i‡(
+	`ªmove
+("/etc/dnsmasq.conf") == 0)
+
+10 
+	`LOG
+("remove dnsmasq.conf success");
+
+12 
+	`LOG
+("remove dnsmasq.conf fail");
+
+14 
+	`sy°em
+("mtdÉrase mtd1");
+
+17 
+	}
+}
+
+	@cdbupload.c
+
+2 
+	~"wdk.h
+"
+
+6 
+	efûe_f‹m©
+ {
+
+7 
+	mCDB_UNCOMPRESSED
+ = 0,
+
+8 
+	mCDB_GZIP
+ = 0,
+
+9 
+	mCDB_BZIP2
+ = 1,
+
+13 
+	$åy_to_uncom¥ess
+(*
+∑th
+) {
+
+15 
+hódî
+[2] = {0};
+
+16 
+FILE
+ *
+Â
+;
+
+18 
+Â
+ = 
+	`f›í
+(
+∑th
+,"rb");
+
+19 if–
+Â
+ =
+NULL
+ )
+
+21 
+	`LOG
+("Error openándÑead file");
+
+24 
+hódî
+[0] = 
+	`fgëc
+(
+Â
+)&0xff;
+
+25 
+hódî
+[1] = 
+	`fgëc
+(
+Â
+)&0xff;
+
+26 
+	`f˛o£
+(
+Â
+);
+
+28 i‡((
+hódî
+[0] == '#') && (header[1] == 'C')) {
+
+29 
+	`LOG
+("CDBÇormal file");
+
+30 } i‡((
+hódî
+[0] ==0x1f) && (header[1] ==0x8b)) {
+
+31 
+	`LOG
+("GZIP format, using zcat");
+
+32 
+	`exec_cmd2
+("mv %†/tmp/c⁄fig.1", 
+∑th
+);
+
+33 
+	`exec_cmd2
+("zˇà/tmp/c⁄fig.1 > %s", 
+∑th
+);
+
+34 } i‡((
+hódî
+[0] ==0x42) && (header[1] ==0x5a)) {
+
+35 
+	`LOG
+("BZIP2 format, using bzcat");
+
+36 
+	`exec_cmd2
+("mv %†/tmp/c⁄fig.1", 
+∑th
+);
+
+37 
+	`exec_cmd2
+("bzˇà/tmp/c⁄fig.1 > %s", 
+∑th
+);
+
+39 
+	`LOG
+("notá cdb file!");
+
+44 
+	}
+}
+
+50 
+exp‹t
+ 
+	gCONTENT_LENGTH
+='5468'
+
+51 
+exp‹t
+ 
+CONTENT_TYPE
+='multipart/form-data; boundary=----WebKitFormBoundaryCGtCM4'
+
+52 
+exp‹t
+ 
+DOCUMENT_ROOT
+='/www'
+
+53 
+exp‹t
+ 
+FILE_ID
+='0'
+
+54 
+exp‹t
+ 
+GATEWAY_INTERFACE
+='CGI/1.1'
+
+55 
+exp‹t
+ 
+HTTP_ACCEPT
+='text/html,application/xhtml+xml,application/xml;q=0.9,image'
+
+56 
+exp‹t
+ 
+HTTP_ACCEPT_ENCODING
+='gzip, deflate,Üzma'
+
+57 
+exp‹t
+ 
+HTTP_ACCEPT_LANGUAGE
+='en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4'
+
+58 
+exp‹t
+ 
+HTTP_AUTHORIZATION
+='Basic YWRtaW46YWRtaW4='
+
+59 
+exp‹t
+ 
+HTTP_CONNECTION
+='keep-alive'
+
+60 
+exp‹t
+ 
+HTTP_COOKIE
+='language=en'
+
+61 
+exp‹t
+ 
+HTTP_HOST
+='192.168.1.169'
+
+62 
+exp‹t
+ 
+HTTP_REFERER
+='http://192.168.1.169/config.htm'
+
+63 
+exp‹t
+ 
+HTTP_USER_AGENT
+='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML,'
+
+64 
+exp‹t
+ 
+PATH
+='/sbin:/usr/sbin:/bin:/usr/bin'
+
+65 
+exp‹t
+ 
+PWD
+='/www'
+
+66 
+exp‹t
+ 
+QUERY_STRING
+=''
+
+67 
+exp‹t
+ 
+REMOTE_ADDR
+='192.168.1.213'
+
+68 
+exp‹t
+ 
+REMOTE_HOST
+='192.168.1.213'
+
+69 
+exp‹t
+ 
+REMOTE_PORT
+='9259'
+
+70 
+exp‹t
+ 
+REMOTE_USER
+='admin'
+
+71 
+exp‹t
+ 
+REQUEST_METHOD
+='PO'
+
+75 
+£d
+ -
+i
+ "s/^\('192.168.1.213' '0' \).*\–.*\)$/\1${1}\2/g" /
+tmp
+/
+u∂ﬂd_°©e
+ 2
+
+86 
+	$wdk_cdbu∂ﬂd
+(
+¨gc
+, **
+¨gv
+)
+
+89 i‡(
+¨gc
+ > 0)
+
+92 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_ONGOING
+);
+
+93 i‡(
+	`f_exi°s
+("/tmp/config.cdb")) {
+
+94 
+	`LOG
+("/tmp/config.cdb found, startÅo update");
+
+96 i‡(0 =
+	`åy_to_uncom¥ess
+("/tmp/config.cdb")) {
+
+98 
+	`exec_cmd
+("tr -d \"\r\" < /tmp/config.cdb > /tmp/tmp.cdb");
+
+99 
+	`exec_cmd
+("cp /tmp/tmp.cdb /tmp/config.cdb");
+
+100 
+	`exec_cmd
+("rm -rf /tmp/tmp.cdb");
+
+102 
+	`exec_cmd
+("cdbÜoad /tmp/config.cdb");
+
+103 
+	`exec_cmd
+("cdb commit");
+
+104 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_SUCCESS
+);
+
+106 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_FAILURE
+);
+
+109 
+	`LOG
+("/tmp/config.cdbÇot found!");
+
+110 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_FAILURE
+);
+
+114 
+	}
+}
+
+	@debug.c
+
+2 
+	~"wdk.h
+"
+
+5 
+	$¥öt_shñl_ªsu…
+(*
+comm™d
+)
+
+7 
+FILE
+ *
+Â
+ = 
+NULL
+;
+
+8 
+ªsu…
+[100] = {0};
+
+9 
+Â
+ = 
+	`p›í
+(
+comm™d
+, "r");
+
+10 i‡(
+Â
+ =
+NULL
+) {
+
+11 
+	`LOG
+("FailedÅoÑun command\n" );
+
+15 
+	`fgës
+(
+ªsu…
+, ‘esu…), 
+Â
+Ë!
+NULL
+) {
+
+16 
+	`¥ötf
+("%s", 
+ªsu…
+);
+
+18 
+	`p˛o£
+(
+Â
+);
+
+20 
+	}
+}
+
+23 
+	$wdk_debug
+(
+¨gc
+, **
+¨gv
+)
+
+25 
+i
+ = 0;
+
+26 
+cmd
+[100] = {0};
+
+27 
+i
+ = 0; i < 
+¨gc
+; i++) {
+
+28 
+	`°rˇt
+(
+cmd
+, 
+¨gv
+[
+i
+]);
+
+29 
+	`°rˇt
+(
+cmd
+, " ");
+
+31 
+	`¥ötf
+("cmd=%s\n", 
+cmd
+);
+
+32 i‡(
+	`°æí
+(
+cmd
+) > 0)
+
+33 
+	`¥öt_shñl_ªsu…
+(
+cmd
+);
+
+36 
+	}
+}
+
+	@dhcps.c
+
+1 
+	~<˘y≥.h
+>
+
+2 
+	~"wdk.h
+"
+
+4 
+	~"ö˛ude/mtc_lökli°.h
+"
+
+6 
+	#DNS_NAME
+ "dnsmasq"
+
+	)
+
+7 
+	#DNS_CONFILE
+ "/tmp/"
+DNS_NAME
+".c⁄f"
+
+	)
+
+8 
+	#DNS_LEASEFILE
+ "/v¨/run/"
+DNS_NAME
+".Àa£s"
+
+	)
+
+10 
+	#MYTAG
+ "MODIFIED"
+
+	)
+
+12 
+	sÀa£Iãm
+
+
+14 *
+	maddr
+;
+
+15 c⁄° *
+	mmac
+;
+
+16 c⁄° *
+	m«me
+;
+
+17 c⁄° *
+	mù
+;
+
+18 
+	mÊg
+;
+
+19 
+	mexp
+;
+
+24 
+li°_hód
+ 
+	mli°
+;
+
+25 
+Àa£Iãm
+ 
+	môem
+;
+
+26 }
+	tÀa£Li°Node
+;
+
+28 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$dh˝s_gë_Àa£s_num
+()
+
+30 
+num
+ = 0;
+
+31 
+FILE
+ *
+Â
+;
+
+32 
+c
+;
+
+34 if–
+	`f_exi°s
+(
+DNS_LEASEFILE
+) ) {
+
+35 
+Â
+ = 
+	`f›í
+(
+DNS_LEASEFILE
+, "r");
+
+36 i‡(
+Â
+) {
+
+37 (
+c
+ = 
+	`fgëc
+(
+Â
+)Ë!
+EOF
+) {
+
+38 i‡(
+c
+ == '\n') {
+
+39 
+num
+++;
+
+42 
+	`f˛o£
+(
+Â
+);
+
+46  
+num
+;
+
+47 
+	}
+}
+
+49 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$dh˝s_∑r£_dnsmasq_c⁄f
+(
+li°_hód
+ *
+lh
+)
+
+52 
+Àa£Li°Node
+ *
+node
+;
+
+53 
+FILE
+ *
+Â
+;
+
+54 
+buf
+[128];
+
+55 *
+¨gv
+[10];
+
+56 *
+addr
+;
+
+57 
+èg
+ = 0;
+
+59 if–!
+	`f_exi°s
+(
+DNS_CONFILE
+) ) {
+
+62 i‡((
+Â
+ = 
+	`f›í
+(
+DNS_CONFILE
+, "r")Ë!
+NULL
+) {
+
+63 
+	`√w_fgës
+(
+buf
+, (buf), 
+Â
+Ë!
+NULL
+) {
+
+64 i‡(!
+èg
+ && 
+	`°r°r
+(
+buf
+, 
+MYTAG
+)) {
+
+65 
+èg
+ = 1;
+
+67 i‡(
+	`°r°r
+(
+buf
+, "dhcp-host=")) {
+
+68 i‡((
+addr
+ = 
+	`°rdup
+(
+buf
+)Ë=
+NULL
+)
+
+70 i‡(
+	`°r2¨gv
+(
+addr
++("dh˝-ho°=")-1, 
+¨gv
+, ',') < 3)
+
+73 i‡((
+node
+ = (
+Àa£Li°Node
+ *)
+	`ˇŒoc
+(÷ó£Li°Node), 1)Ë!
+NULL
+) {
+
+74 
+node
+->
+li°
+.
+√xt
+ =Çode->li°.
+¥ev
+ = &node->list;
+
+75 
+node
+->
+ôem
+.
+addr
+ =áddr;
+
+76 
+node
+->
+ôem
+.
+mac
+ = 
+¨gv
+[0];
+
+77 
+node
+->
+ôem
+.
+«me
+ = 
+¨gv
+[1];
+
+78 
+node
+->
+ôem
+.
+ù
+ = 
+¨gv
+[2];
+
+79 
+node
+->
+ôem
+.
+Êg
+ = 1;
+
+80 
+node
+->
+ôem
+.
+exp
+ = 0;
+
+82 
+	`li°_add_èû
+(&
+node
+->
+li°
+, 
+lh
+);
+
+86 
+	`f˛o£
+(
+Â
+);
+
+88 i‡(
+èg
+) {
+
+89 
+	`exec_cmd2
+("£d -ò'/%s/d' %s", 
+MYTAG
+, 
+DNS_CONFILE
+);
+
+90 
+	`exec_cmd2
+("mtc_cli dnsÑestart");
+
+94 
+	}
+}
+
+96 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$dh˝s_∑r£_dnsmasq_Àa£s
+(
+li°_hód
+ *
+lh
+)
+
+99 
+Àa£Li°Node
+ *
+node
+;
+
+100 
+FILE
+ *
+Â
+;
+
+101 
+buf
+[128];
+
+102 *
+¨gv
+[10];
+
+103 *
+addr
+;
+
+105 if–!
+	`f_exi°s
+(
+DNS_LEASEFILE
+) ) {
+
+108 i‡((
+Â
+ = 
+	`f›í
+(
+DNS_LEASEFILE
+, "r")Ë!
+NULL
+) {
+
+109 
+	`√w_fgës
+(
+buf
+, (buf), 
+Â
+Ë!
+NULL
+) {
+
+110 i‡((
+addr
+ = 
+	`°rdup
+(
+buf
+)Ë=
+NULL
+)
+
+112 i‡(
+	`°r2¨gv
+(
+addr
+, 
+¨gv
+, ' ') < 4)
+
+115 i‡((
+node
+ = (
+Àa£Li°Node
+ *)
+	`ˇŒoc
+(÷ó£Li°Node), 1)Ë!
+NULL
+) {
+
+116 
+node
+->
+li°
+.
+√xt
+ =Çode->li°.
+¥ev
+ = &node->list;
+
+117 
+node
+->
+ôem
+.
+addr
+ =áddr;
+
+118 
+node
+->
+ôem
+.
+mac
+ = 
+¨gv
+[1];
+
+119 
+node
+->
+ôem
+.
+«me
+ = 
+¨gv
+[3];
+
+120 
+node
+->
+ôem
+.
+ù
+ = 
+¨gv
+[2];
+
+121 
+node
+->
+ôem
+.
+Êg
+ = 0;
+
+122 
+node
+->
+ôem
+.
+exp
+ = 
+	`©oi
+(
+¨gv
+[0]);
+
+124 
+	`li°_add_èû
+(&
+node
+->
+li°
+, 
+lh
+);
+
+127 
+	`f˛o£
+(
+Â
+);
+
+131 
+	}
+}
+
+133 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$dh˝s_show_Àa£s
+()
+
+138 
+	`LIST_HEAD
+(
+˛õ¡
+);
+
+139 
+li°_hód
+ *
+lh
+ = &
+˛õ¡
+;
+
+140 
+li°_hód
+ *
+pos
+, *
+√xt
+;
+
+141 
+Àa£Li°Node
+ *
+node
+, *
+¬ode
+;
+
+142 
+Àa£Iãm
+ 
+ôem
+;
+
+143 
+ª≥©
+ = 0;
+
+145 
+	`dh˝s_∑r£_dnsmasq_c⁄f
+(
+lh
+);
+
+146 
+	`dh˝s_∑r£_dnsmasq_Àa£s
+(
+lh
+);
+
+148 i‡(!
+	`li°_em±y
+(
+lh
+)) {
+
+150 
+ª≥©
+ = 0;
+
+151 
+	`li°_f‹_óch_ß„
+(
+pos
+, 
+√xt
+, 
+lh
+) {
+
+152 i‡(
+√xt
+ !
+lh
+) {
+
+153 
+node
+ = (
+Àa£Li°Node
+ *)
+	`li°_íåy
+(
+pos
+,Üó£Li°Node, 
+li°
+);
+
+154 
+¬ode
+ = (
+Àa£Li°Node
+ *)
+	`li°_íåy
+(
+√xt
+,Üó£Li°Node, 
+li°
+);
+
+155 i‡(
+	`°rcmp
+(
+node
+->
+ôem
+.
+mac
+, 
+¬ode
+->item.mac) > 0) {
+
+156 
+	`mem˝y
+(&
+ôem
+, &
+node
+->ôem, (
+Àa£Iãm
+));
+
+157 
+	`mem˝y
+(&
+node
+->
+ôem
+, &
+¬ode
+->ôem, (
+Àa£Iãm
+));
+
+158 
+	`mem˝y
+(&
+¬ode
+->
+ôem
+, &ôem, (
+Àa£Iãm
+));
+
+160 
+ª≥©
+ = 1;
+
+164 } 
+ª≥©
+);
+
+166 
+	`li°_f‹_óch_ß„
+(
+pos
+, 
+√xt
+, 
+lh
+) {
+
+167 
+node
+ = (
+Àa£Li°Node
+ *)
+	`li°_íåy
+(
+pos
+,Üó£Li°Node, 
+li°
+);
+
+168 
+	`¥ötf
+("name=%s&ip=%s&mac=%s&flg=%d&exp=%d\n",
+
+169 
+node
+->
+ôem
+.
+«me
+,Çode->ôem.
+ù
+,Çode->ôem.
+mac
+,Çode->ôem.
+Êg
+,Çode->ôem.
+exp
+);
+
+170 
+	`li°_dñ
+(&
+node
+->
+li°
+);
+
+171 
+	`‰ì
+(
+node
+->
+ôem
+.
+addr
+);
+
+172 
+	`‰ì
+(
+node
+);
+
+177 
+	}
+}
+
+179 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$dh˝s_£t
+(*
+¨gs
+)
+
+182 *
+¨gv
+[10];
+
+183 *
+«me
+, *
+ù
+, *
+mac
+, *
+Êg
+;
+
+184 *
+p
+;
+
+186 if–!
+	`f_exi°s
+(
+DNS_CONFILE
+) ) {
+
+190 if((
+	`°r2¨gv
+(
+¨gs
+, 
+¨gv
+, '&') < 4) ||
+
+191 !
+	`°r_¨g
+(
+¨gv
+, "name=") || !str_arg(argv, "ip=") ||
+
+192 !
+	`°r_¨g
+(
+¨gv
+, "mac=") || !str_arg(argv, "flg=")) {
+
+193 
+	`¥ötf
+("%s: skù,árgv i†nŸ com∂ëe", 
+__func__
+);
+
+197 
+«me
+ = 
+	`°r_¨g
+(
+¨gv
+, "name=");
+
+198 
+ù
+ = 
+	`°r_¨g
+(
+¨gv
+, "ip=");
+
+199 
+mac
+ = 
+	`°r_¨g
+(
+¨gv
+, "mac=");
+
+200 
+Êg
+ = 
+	`°r_¨g
+(
+¨gv
+, "flg=");
+
+201 
+p
+=
+mac
+; *p; ++pË*∞
+	`tﬁowî
+(*p);
+
+203 
+	`exec_cmd2
+("£d -ò'/dh˝-ho°=%s,.*,%s/d' %s", 
+mac
+, 
+ù
+, 
+DNS_CONFILE
+);
+
+204 i‡(!
+	`°rcmp
+(
+Êg
+, "1")) {
+
+205 
+	`exec_cmd2
+("£d -ò'$®dh˝-ho°=%s,%s,%s' %s", 
+mac
+, 
+«me
+, 
+ù
+, 
+DNS_CONFILE
+);
+
+207 
+	`exec_cmd2
+("echÿ%†>> %s", 
+MYTAG
+, 
+DNS_CONFILE
+);
+
+210 
+	}
+}
+
+212 
+	$wdk_dh˝s
+(
+¨gc
+, **
+¨gv
+)
+
+214 
+îr
+ = -1;
+
+216 if(
+¨gc
+ == 1) {
+
+217 i‡(
+	`°rcmp
+("Àa£s", 
+¨gv
+[0]) == 0) {
+
+218 
+	`dh˝s_show_Àa£s
+();
+
+219 
+îr
+ = 0;
+
+220 } i‡(
+	`°rcmp
+("num", 
+¨gv
+[0]) == 0) {
+
+221 
+	`¥ötf
+("%d\n", 
+	`dh˝s_gë_Àa£s_num
+());
+
+222 
+îr
+ = 0;
+
+224 } if(
+¨gc
+ == 2) {
+
+225 i‡(
+	`°rcmp
+("£t", 
+¨gv
+[0]) == 0) {
+
+226 
+	`dh˝s_£t
+(
+¨gv
+[1]);
+
+227 
+îr
+ = 0;
+
+231 i‡(!
+îr
+) {
+
+235 
+	`¥ötf
+("usage:/lib/wdk/dhcps [set/leases/num]\n");
+
+236 
+	`¥ötf
+("/lib/wdk/dhcps setÇame=Client1&ip=192.168.169.100&mac=00:11:22:33:44:55&flg=1\n");
+
+239 
+	}
+}
+
+	@get_channel.c
+
+2 
+	~"wdk.h
+"
+
+10 
+	$wdk_gë_ch™√l
+(
+¨gc
+, **
+¨gv
+)
+
+12 
+ªsu…
+[100] = {0};
+
+13 i‡(
+¨gc
+ != 0) {
+
+21 
+	`gë_shñl_ªsu…
+("iw dev sè0 infÿ| gª∞ch™√»|áwk '{¥öà$2}'", 
+ªsu…
+, (result));
+
+22 i‡(
+	`°æí
+(
+ªsu…
+) > 0) {
+
+23 
+	`¥ötf
+("%d", 
+	`©oi
+(
+ªsu…
+));
+
+26 
+	`gë_shñl_ªsu…
+("iw dev wœn0 infÿ| gª∞ch™√»|áwk '{¥öà$2}'", 
+ªsu…
+, (result));
+
+27 i‡(
+	`°æí
+(
+ªsu…
+) > 0) {
+
+28 
+	`¥ötf
+("%d", 
+	`©oi
+(
+ªsu…
+));
+
+30 
+	`¥ötf
+("0");
+
+35 
+	}
+}
+
+	@http.c
+
+3 
+	~"wdk.h
+"
+
+8 
+	$do_œrgïo°
+()
+
+11 
+Æive_li°
+[200] = {0};
+
+12 
+kûl_li°
+[200] = {0};
+
+14 *
+WDKUPGRADE_KEEP_ALIVE
+ = 
+NULL
+;
+
+15 i‡(
+	`f_exi°s
+("/tmp/wdkupgrade_before"))
+
+16 
+	`exec_cmd
+("/tmp/wdkupgrade_before");
+
+27 
+	`°rˇt
+(
+Æive_li°
+, "init\\|uhttpd\\|hostapd\\|ash\\|watchdog\\|http\\|ps\\|$$");
+
+28 
+WDKUPGRADE_KEEP_ALIVE
+ = 
+	`gëív
+("WDKUPGRADE_KEEP_ALIVE");
+
+29 i‡(
+NULL
+ !
+WDKUPGRADE_KEEP_ALIVE
+) {
+
+30 
+	`°rˇt
+(
+Æive_li°
+, "\\|");
+
+31 
+	`°rˇt
+(
+Æive_li°
+, 
+WDKUPGRADE_KEEP_ALIVE
+);
+
+33 
+	`LOG
+("Alivêli° = %s", 
+Æive_li°
+);
+
+35 
+	`exec_cmd3
+(
+kûl_li°
+, (kûl_li°), "p†| gª∞-v '%s' |áwk '{if(NR > 2Ë¥öà$1}' |Å∏'\n' ' ' | x¨g†kû»-9", 
+Æive_li°
+);
+
+50 
+	`wrôñöe
+("/proc/sys/vm/drop_caches", "3");
+
+51 
+	`exec_cmd
+("sync");
+
+53 
+	}
+}
+
+57 
+	$wdk_hâp
+(
+¨gc
+, **
+¨gv
+)
+
+59 i‡(
+¨gc
+ != 1)
+
+62 i‡(
+	`°rcmp
+(
+¨gv
+[0], "largepost") == 0) {
+
+63 
+	`do_œrgïo°
+();
+
+64 } i‡(
+	`°rcmp
+(
+¨gv
+[0], "peerip") == 0) {
+
+66 *
+vÆue
+ = 
+	`gëív
+("REMOTE_ADDR");
+
+67 i‡(
+NULL
+ !
+vÆue
+) {
+
+68 
+	`LOG
+("REMOTE IP=%s", 
+vÆue
+);
+
+69 
+	`¥ötf
+("%s\n", 
+vÆue
+);
+
+71 } i‡(
+	`°rcmp
+(
+¨gv
+[0], "peermac") == 0) {
+
+72 *
+vÆue
+ = 
+	`gëív
+("REMOTE_ADDR");
+
+73 
+mac
+[100] = {0};
+
+74 i‡(
+NULL
+ !
+vÆue
+) {
+
+75 
+	`LOG
+("REMOTE IP=%s", 
+vÆue
+);
+
+76 
+	`exec_cmd3
+(
+mac
+, (mac), "ˇà/¥oc/√t/¨∞| gª∞\"%s\" |áwk '{¥öà$4}'", 
+vÆue
+);
+
+77 i‡(
+	`°æí
+(
+mac
+) > 0)
+
+78 
+	`¥ötf
+("%s\n", 
+mac
+);
+
+84 
+	}
+}
+
+	@log.c
+
+3 
+	~"wdk.h
+"
+
+6 
+	slog_maû
+ {
+
+7 
+	mlog_maû_í
+;
+
+8 
+	mlog_sys_ù
+[100];
+
+9 
+	mlog_maû_ù
+[100];
+
+10 
+	mlog_maû_addr
+[100];
+
+11 
+	mlog_maû_£nd
+[100];
+
+12 
+	mlog_maû_auth
+[100];
+
+14 
+	mauth_í
+[100];
+
+15 
+	mu£∫ame
+[100];
+
+16 
+	m∑ssw‹d
+[100];
+
+20 
+	#LOGMSG
+ "/v¨/log/mesßges"
+
+	)
+
+21 
+log_maû
+ 
+	gg_log_maû
+;
+
+26 
+	$öô_log
+()
+
+28 
+g_log_maû
+.
+log_maû_í
+ = 
+	`cdb_gë_öt
+("$log_mail_en", 0);
+
+29 
+	`cdb_gë
+("$log_sys_ù", 
+g_log_maû
+.
+log_sys_ù
+);
+
+30 
+	`cdb_gë
+("$log_maû_ù", 
+g_log_maû
+.
+log_maû_ù
+);
+
+31 
+	`cdb_gë
+("$log_maû_addr", 
+g_log_maû
+.
+log_maû_addr
+);
+
+32 
+	`cdb_gë
+("$log_maû_£nd", 
+g_log_maû
+.
+log_maû_£nd
+);
+
+33 
+	`cdb_gë
+("$log_maû_auth", 
+g_log_maû
+.
+log_maû_auth
+);
+
+39 i‡(
+	`°r°r
+(
+g_log_maû
+.
+log_maû_auth
+, "í=1"Ë!
+NULL
+) {
+
+40 *
+ps
+ = 
+NULL
+;
+
+41 *
+un
+ = 
+NULL
+;
+
+42 
+g_log_maû
+.
+log_maû_í
+ = 1;
+
+43 
+ps
+ = 
+	`°r°r
+(
+g_log_maû
+.
+log_maû_auth
+, "ps=");
+
+44 i‡(
+NULL
+ =
+ps
+)
+
+46 
+	`°r˝y
+(
+g_log_maû
+.
+∑ssw‹d
+, 
+ps
++3);
+
+47 *(
+ps
+ -1) = 0x00;
+
+48 
+un
+ = 
+	`°r°r
+(
+g_log_maû
+.
+log_maû_auth
+, "un=");
+
+49 i‡(
+NULL
+ =
+un
+)
+
+51 
+	`°r˝y
+(
+g_log_maû
+.
+u£∫ame
+, 
+un
++3);
+
+55 
+	}
+}
+
+57 
+	$≠≥nd_sögÀ_log
+(*
+ãmp_fûe_«me
+, *
+fûe_«me
+)
+
+59 
+	`exec_cmd2
+("echÿ\"%s\" >> %s", 
+fûe_«me
+, 
+ãmp_fûe_«me
+);
+
+60 
+	`exec_cmd2
+("ˇà%†>> %s", 
+fûe_«me
+, 
+ãmp_fûe_«me
+);
+
+61 
+	}
+}
+
+64 
+	$≠≥nd_sy¶og
+(*
+ãmp_fûe_«me
+)
+
+67 
+ödex
+ = 0;
+
+68 
+fûe_«me
+[100] = {0};
+
+70 i‡(
+	`f_exi°s
+(
+LOGMSG
+))
+
+71 
+	`≠≥nd_sögÀ_log
+(
+ãmp_fûe_«me
+, 
+LOGMSG
+);
+
+74 
+	`mem£t
+(
+fûe_«me
+, 0, (file_name));
+
+75 
+	`•rötf
+(
+fûe_«me
+, "%s.%d", 
+LOGMSG
+, 
+ödex
+);
+
+76 i‡(
+	`f_exi°s
+(
+fûe_«me
+)) {
+
+77 
+	`≠≥nd_sögÀ_log
+(
+ãmp_fûe_«me
+, 
+fûe_«me
+);
+
+81 
+ödex
+++;
+
+84 
+	}
+}
+
+104 
+	$£nd_log
+()
+
+106 
+	`LOG
+("---->sendingÜog");
+
+108 
+ãmp_fûe_«me
+[100] = {0};
+
+109 
+fûe_hódî
+[1000] = {0};
+
+110 
+d©e
+[100] = {0};
+
+111 
+maû_£nd_ªsu…
+[100] = {0};
+
+114 
+	`LOG
+("mail_en=%d username=%sÖassword=%s",
+
+115 
+g_log_maû
+.
+log_maû_í
+, g_log_maû.
+u£∫ame
+, g_log_maû.
+∑ssw‹d
+);
+
+118 i‡(
+g_log_maû
+.
+log_maû_í
+ != 1)
+
+121 
+	`exec_cmd3
+(
+d©e
+, (date), "date");
+
+124 
+	`exec_cmd3
+(
+ãmp_fûe_«me
+, (temp_file_name), "mktemp /tmp/mail.XXXXXXXX");
+
+125 
+	`LOG
+("gŸÅem∞fûê«mê%s", 
+ãmp_fûe_«me
+);
+
+126 
+	`•rötf
+(
+fûe_hódî
+, "To: %s\nFrom: %s\nDate: %s\nSubject: Send Syslog message\n\n"
+
+128 
+g_log_maû
+.
+log_maû_addr
+,
+
+129 
+g_log_maû
+.
+log_maû_£nd
+,
+
+130 
+d©e
+);
+
+133 
+	`LOG
+("hódî c⁄ã¡ = %s", 
+fûe_hódî
+);
+
+134 
+	`wrôïroc
+(
+ãmp_fûe_«me
+, 
+fûe_hódî
+);
+
+137 
+	`≠≥nd_sy¶og
+(
+ãmp_fûe_«me
+);
+
+144 i‡(
+g_log_maû
+.
+auth_í
+) {
+
+146 
+	`exec_cmd3
+(
+maû_£nd_ªsu…
+, (mail_send_result),
+
+148 
+g_log_maû
+.
+log_maû_£nd
+, g_log_maû.
+log_maû_ù
+,
+
+149 
+g_log_maû
+.
+u£∫ame
+, g_log_maû.
+∑ssw‹d
+, 
+ãmp_fûe_«me
+);
+
+150 i‡(
+	`°æí
+(
+maû_£nd_ªsu…
+) > 0)
+
+151 
+	`LOG
+("maû faûed,Ñesu… = %s", 
+maû_£nd_ªsu…
+);
+
+153 
+	`LOG
+("This method isÇotÅested,Ço support!!!");
+
+155 
+	`exec_cmd2
+("/usr/sbin/sendmail -f %s -S %s -t < %s",
+
+156 
+g_log_maû
+.
+log_maû_£nd
+, g_log_maû.
+log_maû_ù
+, 
+ãmp_fûe_«me
+);
+
+160 
+	`ªmove
+(
+ãmp_fûe_«me
+);
+
+161 
+	}
+}
+
+165 
+	$show_sögÀ_log
+(*
+log_fûe
+)
+
+167 
+	`LOG
+("---->dum∞log:%s", 
+log_fûe
+);
+
+168 
+	#CHUNK
+ 1024
+
+	)
+
+169 
+buf
+[
+CHUNK
+];
+
+170 
+FILE
+ *
+fûe
+;
+
+171 
+size_t
+ 
+ƒód
+;
+
+172 
+fûe
+ = 
+	`f›í
+(
+log_fûe
+, "r");
+
+173 i‡(
+fûe
+) {
+
+174 (
+ƒód
+ = 
+	`‰ód
+(
+buf
+, 1,  buf, 
+fûe
+)) > 0)
+
+175 
+	`fwrôe
+(
+buf
+, 1, 
+ƒód
+, 
+°dout
+);
+
+176 i‡(
+	`„º‹
+(
+fûe
+)) {
+
+177 
+	`LOG
+("readÜogÉrror");
+
+179 
+	`f˛o£
+(
+fûe
+);
+
+181 
+	}
+}
+
+185 
+	$show_log
+()
+
+187 
+ödex
+ = 0;
+
+188 
+fûe_«me
+[100] = {0};
+
+190 i‡(
+	`f_exi°s
+(
+LOGMSG
+))
+
+191 
+	`show_sögÀ_log
+(
+LOGMSG
+);
+
+194 
+	`mem£t
+(
+fûe_«me
+, 0, (file_name));
+
+195 
+	`•rötf
+(
+fûe_«me
+, "%s.%d", 
+LOGMSG
+, 
+ödex
+);
+
+196 i‡(
+	`f_exi°s
+(
+fûe_«me
+)) {
+
+197 
+	`show_sögÀ_log
+(
+fûe_«me
+);
+
+201 
+ödex
+++;
+
+203 
+	}
+}
+
+206 
+	$˛ón_log
+()
+
+208 
+ödex
+ = 0;
+
+209 
+fûe_«me
+[100] = {0};
+
+211 i‡(
+	`f_exi°s
+(
+LOGMSG
+)) {
+
+212 i‡(
+	`ªmove
+(
+LOGMSG
+) == 0) {
+
+213 
+	`LOG
+("ªmovêfûê%†suc˚ss", 
+LOGMSG
+);
+
+215 
+	`LOG
+("ªmovêfûê%†Áûed", 
+LOGMSG
+);
+
+220 
+	`mem£t
+(
+fûe_«me
+, 0, (file_name));
+
+221 
+	`•rötf
+(
+fûe_«me
+, "%s.%d", 
+LOGMSG
+, 
+ödex
+);
+
+222 i‡(
+	`f_exi°s
+(
+fûe_«me
+)) {
+
+223 i‡(
+	`ªmove
+(
+fûe_«me
+) == 0) {
+
+224 
+	`LOG
+("ªmovêfûê%†suc˚ss", 
+fûe_«me
+);
+
+226 
+	`LOG
+("ªmovêfûê%†Áûed", 
+fûe_«me
+);
+
+231 
+ödex
+++;
+
+234 
+	`exec_cmd
+("touch /var/log/messages");
+
+235 
+	}
+}
+
+238 
+	$wdk_log
+(
+¨gc
+, **
+¨gv
+)
+
+240 i‡(
+¨gc
+ != 1)
+
+243 
+	`öô_log
+();
+
+245 i‡(
+	`°r_equÆ
+(
+¨gv
+[0] ,"-s"))
+
+246 
+	`£nd_log
+();
+
+247 i‡(
+	`°r_equÆ
+(
+¨gv
+[0] ,"-xymta"))
+
+248 
+	`show_log
+();
+
+249 i‡(
+	`°r_equÆ
+(
+¨gv
+[0] ,"clean"))
+
+250 
+	`˛ón_log
+();
+
+252 
+	`LOG
+("wdkÜog failed");
+
+256 
+	}
+}
+
+	@logconf.c
+
+3 
+	~"wdk.h
+"
+
+7 
+	$wdk_logc⁄f
+(
+¨gc
+, **
+¨gv
+)
+
+9 
+log_sys_ù
+[100] = {0};
+
+10 
+log_rm_íabÀ
+ = 0;
+
+12 
+	`exec_cmd
+("killall syslogd");
+
+14 
+log_rm_íabÀ
+ = 
+	`cdb_gë_öt
+("$log_rm_enable", 0);
+
+15 
+	`cdb_gë
+("$log_sys_ù", 
+log_sys_ù
+);
+
+16 i‡(
+	`f_exi°s
+( "/sbin/syslogd")) {
+
+17 i‡(1 =
+log_rm_íabÀ
+) {
+
+18 
+	`LOG
+("Sèπög sy¶ogÅÿ%s", 
+log_sys_ù
+);
+
+19 
+	`exec_cmd2
+("sy¶ogd -†1 -L -R %s:514", 
+log_sys_ù
+);
+
+24 
+	}
+}
+
+	@logout.c
+
+2 
+	~"wdk.h
+"
+
+8 
+	$wdk_logout
+(
+¨gc
+, **
+¨gv
+)
+
+11 
+pid
+[20] = {0};
+
+12 i‡(
+¨gc
+ != 0) {
+
+16 
+	`exec_cmd3
+(
+pid
+, (pid), "cat /tmp/httpd.pid");
+
+17 i‡(
+	`°æí
+(
+pid
+) > 0) {
+
+18 
+	`LOG
+("KILL:%s", 
+pid
+);
+
+19 
+	`exec_cmd2
+("kû»-HUP %s", 
+pid
+);
+
+23 
+	}
+}
+
+	@mangment.c
+
+3 
+	~"wdk.h
+"
+
+4 
+	~"cdb.h
+"
+
+18 
+	$å™¶©e_f‹m©
+(*
+°rög_ö
+, *
+°rög_out
+)
+
+20 *
+p1
+ = 
+NULL
+;
+
+21 *
+p2
+ = 
+NULL
+;
+
+24 
+p1
+ = 
+	`°r°r
+(
+°rög_ö
+, "user=");
+
+25 
+p2
+ = 
+	`°r°r
+(
+°rög_ö
+, "pass=");
+
+26 *(
+p2
+ - 1) = 0;
+
+28 i‡((
+p1
+ !
+NULL
+Ë&& (
+p2
+ != NULL)) {
+
+29 
+	`°rˇt
+(
+°rög_out
+, "/:");
+
+30 
+	`°rˇt
+(
+°rög_out
+, 
+p1
+ + 5);
+
+31 
+	`°rˇt
+(
+°rög_out
+, ":");
+
+32 
+	`°rˇt
+(
+°rög_out
+, 
+p2
+ + 5);
+
+35 
+	}
+}
+
+42 
+	$wdk_m™gmít
+(
+¨gc
+, **
+¨gv
+)
+
+44 
+hâpd_c⁄fig
+[100] = {0};
+
+45 
+cdb_c⁄fig
+[100] = {0};
+
+46 
+cdb_c⁄fig_√w
+[100] = {0};
+
+47 
+	#HTTD_CONF
+ "/tmp/hâpd.c⁄f"
+
+	)
+
+49 i‡(
+¨gc
+ != 0) {
+
+50 
+	`LOG
+("noárgumentÇeeded");
+
+55 i‡(0 =
+	`ac˚ss
+(
+HTTD_CONF
+, 0)) {
+
+56 
+	`ªadlöe
+(
+HTTD_CONF
+, 
+hâpd_c⁄fig
+, (httpd_config));
+
+57 
+	`cdb_gë
+("$sys_u£r1", 
+cdb_c⁄fig
+);
+
+58 
+	`å™¶©e_f‹m©
+(
+cdb_c⁄fig
+, 
+cdb_c⁄fig_√w
+);
+
+60 
+	`LOG
+("From http.conf=%s\n cdb=%s\n cdb_new=%s",
+
+61 
+hâpd_c⁄fig
+, 
+cdb_c⁄fig
+, 
+cdb_c⁄fig_√w
+);
+
+63 i‡(0 =
+	`°rcmp
+(
+cdb_c⁄fig_√w
+, 
+hâpd_c⁄fig
+)) {
+
+64 
+	`LOG
+("Configurationáre same.ÇothingÅo be done");
+
+66 
+	`LOG
+("overriding http.conf...");
+
+67 
+	`wrôñöe
+(
+HTTD_CONF
+, 
+cdb_c⁄fig_√w
+);
+
+70 
+	`LOG
+("%†nŸ found!!!", 
+HTTD_CONF
+);
+
+74 
+	}
+}
+
+	@ping.c
+
+3 
+	~"wdk.h
+"
+
+6 
+	$wdk_pög
+(
+¨gc
+, **
+¨gv
+)
+
+8 
+outbuf
+[100] = {0};
+
+9 i‡(
+¨gc
+ != 1) {
+
+13 
+	`exec_cmd3
+(
+outbuf
+, (outbuf), "/bö/pög %†-¯1 | sed -¿'/£q/s/^.*£q/£q/p'", 
+¨gv
+[0]);
+
+14 
+	`¥ötf
+("%s\n", 
+outbuf
+);
+
+17 
+	}
+}
+
+	@reboot.c
+
+3 
+	~"wdk.h
+"
+
+8 
+	$föd_pid_by_«me
+–* 
+ProcName
+, * 
+foundpid
+)
+
+10 
+DIR
+ *
+dú
+;
+
+11 
+dúít
+ *
+d
+;
+
+12 
+pid
+, 
+i
+;
+
+13 *
+s
+;
+
+14 
+≤Àn
+;
+
+16 
+i
+ = 0;
+
+17 
+foundpid
+[0] = 0;
+
+18 
+≤Àn
+ = 
+	`°æí
+(
+ProcName
+);
+
+21 
+dú
+ = 
+	`›ídú
+("/proc");
+
+22 i‡(!
+dú
+)
+
+24 
+	`¥ötf
+("cannot open /proc");
+
+29 (
+d
+ = 
+	`ªaddú
+(
+dú
+)Ë!
+NULL
+) {
+
+31 
+exe
+ [
+PATH_MAX
++1];
+
+32 
+∑th
+[
+PATH_MAX
++1];
+
+33 
+Àn
+;
+
+34 
+«mñí
+;
+
+37 i‡((
+pid
+ = 
+	`©oi
+(
+d
+->
+d_«me
+)) == 0) ;
+
+39 
+	`¢¥ötf
+(
+exe
+, ”xe), "/¥oc/%s/exe", 
+d
+->
+d_«me
+);
+
+40 i‡((
+Àn
+ = 
+	`ªadlök
+(
+exe
+, 
+∑th
+, 
+PATH_MAX
+)) < 0)
+
+42 
+∑th
+[
+Àn
+] = '\0';
+
+45 
+s
+ = 
+	`°ºchr
+(
+∑th
+, '/');
+
+46 if(
+s
+ =
+NULL
+) ;
+
+47 
+s
+++;
+
+50 
+«mñí
+ = 
+	`°æí
+(
+s
+);
+
+51 if(
+«mñí
+ < 
+≤Àn
+) ;
+
+53 if(!
+	`°∫cmp
+(
+ProcName
+, 
+s
+, 
+≤Àn
+)) {
+
+55 if(
+s
+[
+≤Àn
+] == ' ' || s[pnlen] == '\0') {
+
+56 
+foundpid
+[
+i
+] = 
+pid
+;
+
+57 
+i
+++;
+
+62 
+foundpid
+[
+i
+] = 0;
+
+63 
+	`˛o£dú
+(
+dú
+);
+
+67 
+	}
+}
+
+70 
+	$föd_pid_by_«me_ã°
+(
+¨gc
+, *
+¨gv
+[])
+
+72 
+i
+, 
+rv
+, 
+pid_t
+[128];
+
+73 i‡–
+¨gc
+ != 2 )
+
+75 
+	`Ârötf
+(
+°dout
+,"Ußgê%†¥o˙ame\n",
+¨gv
+[0]);
+
+79 
+rv
+ = 
+	`föd_pid_by_«me
+–
+¨gv
+[1], 
+pid_t
+);
+
+80 if(0 =
+rv
+) {
+
+81 
+i
+=0; 
+pid_t
+[i] != 0; i++)
+
+82 
+	`¥ötf
+("%d\n", 
+pid_t
+[
+i
+]);
+
+86 
+	}
+}
+
+89 
+	$wdk_ªboŸ
+(
+¨gc
+, **
+¨gv
+)
+
+92 
+pidof_uhâpd
+[128] = {0};
+
+93 i‡(
+¨gc
+ != 0) {
+
+98 
+	`LOG
+("System isÑebooting...");
+
+100 
+	`exec_cmd
+("/etc/init.d/wlan stop");
+
+101 
+	`¶ìp
+(3);
+
+102 i‡(0 =
+	`föd_pid_by_«me
+("uhâpd", 
+pidof_uhâpd
+)) {
+
+103 
+	`LOG
+("kûlög uhâpdÖid=%d", 
+pidof_uhâpd
+[0]);
+
+104 
+	`kûl
+(
+pidof_uhâpd
+[0], 
+SIGKILL
+);
+
+107 
+	`exec_cmd
+("/sbin/reboot");
+
+110 
+	}
+}
+
+	@route.c
+
+1 
+	~<˘y≥.h
+>
+
+2 
+	~<¨∑/öë.h
+>
+
+3 
+	~<√tutûs.h
+>
+
+4 
+	~"wdk.h
+"
+
+6 
+	#NETROUTE_FILE
+ "/¥oc/√t/rouã"
+
+	)
+
+7 #i‚de‡
+RTF_UP
+
+
+9 
+	#RTF_UP
+ 0x0001
+
+	)
+
+10 
+	#RTF_GATEWAY
+ 0x0002
+
+	)
+
+11 
+	#RTF_HOST
+ 0x0004
+
+	)
+
+15 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$rouã_show_øw
+()
+
+18 
+d°_addrbuf
+[
+INET6_ADDRSTRLEN
++1];
+
+19 
+g©e_addrbuf
+[
+INET6_ADDRSTRLEN
++1];
+
+20 
+dev«me
+[64];
+
+21 
+d
+, 
+g
+, 
+m
+;
+
+22 
+Êgs
+, 
+ªf
+, 
+u£
+, 
+mëric
+, 
+mtu
+, 
+wö
+, 
+ú
+;
+
+23 
+sockaddr_ö
+ 
+s_addr
+;
+
+24 
+ö_addr
+ 
+mask
+;
+
+25 
+FILE
+ *
+Â
+;
+
+27 if–!
+	`f_exi°s
+(
+NETROUTE_FILE
+) ) {
+
+31 
+Â
+ = 
+	`f›í
+(
+NETROUTE_FILE
+, "r");
+
+33 i‡(
+	`fsˇnf
+(
+Â
+, "%*[^\n]\n") < 0) {
+
+34 
+ERROR
+;
+
+37 
+r
+;
+
+38 
+r
+ = 
+	`fsˇnf
+(
+Â
+, "%63s%lx%lx%X%d%d%d%lx%d%d%d\n",
+
+39 
+dev«me
+, &
+d
+, &
+g
+, &
+Êgs
+, &
+ªf
+, &
+u£
+, &
+mëric
+, &
+m
+,
+
+40 &
+mtu
+, &
+wö
+, &
+ú
+);
+
+41 i‡(
+r
+ != 11) {
+
+42 i‡((
+r
+ < 0Ë&& 
+	`„of
+(
+Â
+)) {
+
+47 
+	`mem£t
+(&
+s_addr
+, 0, (
+sockaddr_ö
+));
+
+48 
+s_addr
+.
+sö_Ámûy
+ = 
+AF_INET
+;
+
+49 
+s_addr
+.
+sö_addr
+.s_add∏
+d
+;
+
+50 i‡(!
+	`öë_¡›
+–
+AF_INET
+, (*)&(
+s_addr
+.
+sö_addr
+), 
+d°_addrbuf
+, (dst_addrbuf) )) {
+
+54 
+s_addr
+.
+sö_addr
+.s_add∏
+g
+;
+
+55 i‡(!
+	`öë_¡›
+–
+AF_INET
+, (*)&(
+s_addr
+.
+sö_addr
+), 
+g©e_addrbuf
+, (gate_addrbuf) )) {
+
+59 
+mask
+.
+s_addr
+ = 
+m
+;
+
+61 i‡(!(
+Êgs
+ & 
+RTF_UP
+)) {
+
+65 
+	`¥ötf
+("d°=%s&nm=%s&gw=%s&Êg=U&if=%sN⁄e\n", 
+d°_addrbuf
+, 
+	`öë_¡ﬂ
+(
+mask
+), 
+g©e_addrbuf
+, 
+dev«me
+);
+
+69 
+ERROR
+:
+
+70 
+	`f˛o£
+(
+Â
+);
+
+73 
+	}
+}
+
+75 
+	$wdk_rouã
+(
+¨gc
+, **
+¨gv
+)
+
+77 
+îr
+ = -1;
+
+79 if(
+¨gc
+ == 1) {
+
+80 i‡(
+	`°rcmp
+("øw", 
+¨gv
+[0]) == 0) {
+
+81 
+	`rouã_show_øw
+();
+
+82 
+îr
+ = 0;
+
+83 } i‡(
+	`°rcmp
+("rù", 
+¨gv
+[0]) == 0) {
+
+84 
+	`exec_cmd2
+("mtc_cliÑouteÑestart");
+
+85 
+îr
+ = 0;
+
+89 i‡(!
+îr
+) {
+
+93 
+	`¥ötf
+("usage:/lib/wdk/route [raw/rip]\n");
+
+96 
+	}
+}
+
+	@sleep.c
+
+2 
+	~"wdk.h
+"
+
+5 
+	$wdk_¶ìp
+(
+¨gc
+, **
+¨gv
+)
+
+7 i‡(
+¨gc
+ == 0) {
+
+8 
+	`LOG
+("sleep for 1000ms");
+
+9 
+	`¶ìp
+(1);
+
+11 } if(
+¨gc
+ == 1) {
+
+12 
+	`LOG
+("SÀï f‹ %ds", 
+	`©oi
+(
+¨gv
+[0])/1000);
+
+13 
+	`¶ìp
+(
+	`©oi
+(
+¨gv
+[0])/1000);
+
+18 
+	}
+}
+
+	@smbc.c
+
+18 
+	~"wdk.h
+"
+
+21 
+	#STATE_UPLOAD
+ "/tmp/smbc/u∂ﬂd"
+
+	)
+
+24 
+	$wdk_smbc
+(
+¨gc
+, **
+¨gv
+)
+
+27 
+u∂ﬂd_c⁄ã¡
+[10] = {0};
+
+28 *
+fûe_fuŒ_dú
+ = 
+¨gv
+[1];
+
+29 *
+£rvî_addr
+ = 
+¨gv
+[2];
+
+30 *
+u£r_«me
+ = 
+¨gv
+[3];
+
+31 *
+∑ss_w‹d
+ = 
+¨gv
+[4];
+
+33 
+fûe_dú
+[100] = {0};
+
+34 
+fûe_«me
+[100] = {0};
+
+35 
+smb_comm™d
+[100] = {0};
+
+36 
+smb_ª•⁄£
+[100] = {0};
+
+38 
+i
+ = 0;
+
+41 i‡(
+¨gc
+ == 0)
+
+44 i‡(
+	`°r_equÆ
+(
+¨gv
+[0], "upload")) {
+
+46 
+	`°r˝y
+(
+fûe_dú
+, "/media/");
+
+47 
+i
+ = 
+	`°æí
+(
+fûe_fuŒ_dú
+) -1; i > 1; i--) {
+
+48 i‡(
+fûe_fuŒ_dú
+[
+i
+] == '/') {
+
+49 
+	`°r˝y
+(
+fûe_«me
+, 
+fûe_fuŒ_dú
++
+i
++1);
+
+50 
+fûe_fuŒ_dú
+[
+i
+] = 0x00;
+
+51 
+	`°rˇt
+(
+fûe_dú
+, 
+fûe_fuŒ_dú
+);
+
+56 
+	`LOG
+("dir=%sÇame=%s user=%sÖass=%s",
+
+57 
+fûe_dú
+, 
+fûe_«me
+, 
+u£r_«me
+, 
+∑ss_w‹d
+);
+
+58 
+	`wrôñöe
+(
+STATE_UPLOAD
+, "0");
+
+59 
+	`chdú
+(
+fûe_dú
+);
+
+61 
+	`•rötf
+(
+smb_comm™d
+, "smbclient %s %s -U %s -c \"put %s \"",
+
+62 
+£rvî_addr
+, 
+∑ss_w‹d
+, 
+u£r_«me
+, 
+fûe_«me
+);
+
+63 
+	`LOG
+("Samb®comm™d=%s", 
+smb_comm™d
+);
+
+64 
+	`exec_cmd3
+(
+smb_ª•⁄£
+, (smb_ª•⁄£), 
+smb_comm™d
+);
+
+65 
+	`LOG
+("Samb®ª•⁄£=%s", 
+smb_ª•⁄£
+);
+
+66 
+	`wrôñöe
+(
+STATE_UPLOAD
+, "1");
+
+68 } i‡(
+	`°r_equÆ
+(
+¨gv
+[0], "upload_status")) {
+
+69 
+	`ªadlöe
+(
+STATE_UPLOAD
+ , 
+u∂ﬂd_c⁄ã¡
+, (upload_content));
+
+70 
+	`¥ötf
+("%s", 
+u∂ﬂd_c⁄ã¡
+);
+
+76 
+	}
+}
+
+	@sta.c
+
+3 
+	~"wdk.h
+"
+
+6 
+	siw_°a_öfo
+ {
+
+8 
+	mmac
+[20];
+
+9 
+	mmode
+[20];
+
+10 
+	møã
+[20];
+
+11 
+	msig«l
+[20];
+
+15 
+iw_°a_öfo
+ 
+	gg_°a_öfo
+;
+
+18 
+	$cou¡_sub°r
+(*
+maö_°r
+, *
+sub_°r
+)
+
+20 
+cou¡
+ = 0;
+
+21 * 
+tmp
+ = 
+maö_°r
+;
+
+23 *
+tmp
+ !'\0' && (tm∞
+	`°r°r
+—mp, 
+sub_°r
+))) {
+
+24 ++
+cou¡
+;
+
+25 ++
+tmp
+;
+
+28  
+cou¡
+;
+
+29 
+	}
+}
+
+51 
+	$¥o˚ss_⁄ñöe
+(*
+°r
+)
+
+55 
+löe_cou¡
+ = 0;
+
+56 *
+tmp
+;
+
+58 
+löe_cou¡
+) {
+
+60 
+	`mem£t
+(&
+g_°a_öfo
+, 0, (g_sta_info));
+
+61 
+°r
+[25] = 0x00;
+
+62 
+	`°∫˝y
+(
+g_°a_öfo
+.
+mac
+, 
+°r
+ + 8, (g_sta_info.mac));
+
+65 
+tmp
+ = 
+	`°r°r
+(
+°r
+, "dBm");
+
+66 *(
+tmp
+ - 1) = 0x00;
+
+67 
+tmp
+ = 
+	`°r°r
+(
+°r
+, "-");
+
+68 
+	`°∫˝y
+(
+g_°a_öfo
+.
+sig«l
+ , 
+tmp
+, (g_°a_öfo.
+mac
+));
+
+71 i‡(
+	`°r°r
+(
+°r
+, "MCS"Ë!
+NULL
+) {
+
+72 
+	`°∫˝y
+(
+g_°a_öfo
+.
+mode
+, "11n",(g_°a_öfo.
+mac
+));
+
+73 
+tmp
+ = 
+	`°r°r
+(
+°r
+, "MCS");
+
+74 *(
+tmp
+ - 1) = 0;
+
+75 
+tmp
+ = 
+	`°r°r
+(
+°r
+, "bitrate");
+
+76 
+	`°∫˝y
+(
+g_°a_öfo
+.
+øã
+, 
+tmp
++9,(g_°a_öfo.
+mac
+));
+
+78 
+	`°∫˝y
+(
+g_°a_öfo
+.
+mode
+, "11b/g", (g_°a_öfo.
+mac
+));
+
+79 
+tmp
+ = 
+	`°r°r
+(
+°r
+, "bitrate");
+
+80 
+	`°∫˝y
+(
+g_°a_öfo
+.
+øã
+, 
+tmp
++9,(g_°a_öfo.
+mac
+));
+
+84 
+	`¥ötf
+("mac=%s&mode=%s&rate=%s&signal=%s\n",
+
+85 
+g_°a_öfo
+.
+mac
+, g_°a_öfo.
+mode
+, g_°a_öfo.
+øã
+, g_°a_öfo.
+sig«l
+);
+
+92 
+löe_cou¡
+++;
+
+93 i‡(6 =
+löe_cou¡
+)
+
+94 
+löe_cou¡
+ = 0;
+
+95 
+	}
+}
+
+104 
+	$wdk_°a
+(
+¨gc
+, **
+¨gv
+)
+
+107 
+buf„r
+[500] = {0};
+
+108 *
+ãmp
+;
+
+109 i‡(
+¨gc
+ > 0) {
+
+113 
+	`exec_cmd3
+(
+buf„r
+, (buffer), "iw dev wlan0 station dump");
+
+114 i‡(
+	`°æí
+(
+buf„r
+) == 0)
+
+117 
+ãmp
+ = 
+buf„r
+;
+
+118 
+ãmp
+)
+
+120 * 
+√xtLöe
+ = 
+	`°rchr
+(
+ãmp
+, '\n');
+
+121 i‡(
+√xtLöe
+)
+
+122 *
+√xtLöe
+ = '\0';
+
+123 
+	`¥o˚ss_⁄ñöe
+(
+ãmp
+);
+
+124 i‡(
+√xtLöe
+)
+
+125 *
+√xtLöe
+ = '\n';
+
+126 
+ãmp
+ = 
+√xtLöe
+ ? (√xtLöe+1Ë: 
+NULL
+;
+
+130 
+	}
+}
+
+	@stapoll.c
+
+8 
+	~"wdk.h
+"
+
+11 
+	$‰eq_to_ch™√l
+(
+‰eq
+)
+
+14 
+ch™√l
+ = 0;
+
+16 
+‰eq
+) {
+
+18 
+ch™√l
+ = 1;
+
+21 
+ch™√l
+ = 2;
+
+24 
+ch™√l
+ = 3;
+
+27 
+ch™√l
+ = 4;
+
+30 
+ch™√l
+ = 5;
+
+33 
+ch™√l
+ = 6;
+
+36 
+ch™√l
+ = 7;
+
+39 
+ch™√l
+ = 8;
+
+42 
+ch™√l
+ = 9;
+
+45 
+ch™√l
+ = 10;
+
+48 
+ch™√l
+ = 11;
+
+51 
+ch™√l
+ = 12;
+
+54 
+ch™√l
+ = 13;
+
+57 
+ch™√l
+ = 14;
+
+60 
+	`LOG
+("channel ERROR!\n");
+
+61 
+ch™√l
+ = 1;
+
+65  
+ch™√l
+;
+
+66 
+	}
+}
+
+69 
+	$ª∑ú_ch™√l
+()
+
+73 
+tmp
+[50] = {0};
+
+74 
+‰eq_cur
+ = 0;
+
+75 
+‰eq_cdb
+ = 0;
+
+77 
+	`exec_cmd3
+(
+tmp
+, (tmp), "iw dev sta0Üink |grep freq |áwk '{print $2}'");
+
+78 i‡(
+	`°æí
+(
+tmp
+) == 0) {
+
+79 
+	`LOG
+("stapoll criticalÉrror 2\n");
+
+82 
+‰eq_cur
+ = 
+	`‰eq_to_ch™√l
+(
+	`©oi
+(
+tmp
+));
+
+83 
+‰eq_cdb
+ = 
+	`cdb_gë_öt
+("$wl_channel", 1);
+
+85 i‡(
+‰eq_cur
+ !
+‰eq_cdb
+) {
+
+86 
+	`LOG
+("ch™√»nŸÉquÆ, Cdb=%d Cur=%d\n", 
+‰eq_cdb
+, 
+‰eq_cur
+);
+
+87 
+	`cdb_£t_öt
+("$wl_ch™√l", 
+‰eq_cur
+);
+
+88 
+	`exec_cmd
+("/etc/init.d/wlanÑestart");
+
+90 
+	`LOG
+("ch™√»equÆ, Cdb=%d Cur=%d\n", 
+‰eq_cdb
+, 
+‰eq_cur
+);
+
+94 
+	}
+}
+
+100 
+	#STATUS_NOT_CONNECTED
+ "NŸ c⁄√˘ed"
+
+	)
+
+101 
+	#STATUS_CONNECTED
+ "C⁄√˘ed"
+
+	)
+
+104 
+	$wdk_°≠ﬁl
+(
+¨gc
+, **
+¨gv
+)
+
+107 
+tmp
+[300] = {0};
+
+109 
+	`LOG
+("wdk_stapoll starting...\n");
+
+111 i‡(
+¨gc
+ != 0) {
+
+112 
+	`LOG
+("Nÿ¨gumíà√eded!!!:%s", 
+¨gv
+[0]);
+
+116 
+	`exec_cmd3
+(
+tmp
+, (tmp), "iw dev sta0Üink");
+
+117 i‡(
+	`°æí
+(
+tmp
+) == 0) {
+
+118 
+	`LOG
+("stapoll criticalÉrror 1\n");
+
+123 i‡(
+	`°∫cmp
+(
+tmp
+, 
+STATUS_CONNECTED
+, 
+	`°æí
+(STATUS_CONNECTED)) == 0) {
+
+124 
+	`ª∑ú_ch™√l
+();
+
+126 } i‡(
+	`°∫cmp
+(
+tmp
+, 
+STATUS_NOT_CONNECTED
+, 
+	`°æí
+(STATUS_NOT_CONNECTED)) == 0) {
+
+127 
+	`LOG
+("Wait...");
+
+128 
+	`¶ìp
+(3);
+
+131 
+	`LOG
+("stapoll criticalÉrror 3\n");
+
+137 
+	}
+}
+
+	@status.c
+
+5 
+	~"wdk.h
+"
+
+9 
+	$gë_wifi_sig«l
+()
+
+11 
+›_w‹k_mode
+ = -1;
+
+12 
+tmp
+[50] = {0};
+
+14 
+›_w‹k_mode
+ = 
+	`cdb_gë_öt
+("$op_work_mode", 0);
+
+15 i‡(3 =
+›_w‹k_mode
+) {
+
+16 
+	`exec_cmd3
+(
+tmp
+, (tmp), "iw dev sta0Üink | grep signal |áwk '{print $2}'");
+
+17 
+	`¥ötf
+("%s\n", 
+tmp
+);
+
+19 
+	`¥ötf
+("\n");
+
+21 
+	}
+}
+
+24 
+	$wdk_°©us
+(
+¨gc
+, **
+¨gv
+)
+
+26 i‡(
+¨gc
+ != 1) {
+
+30 i‡(
+	`°rcmp
+(
+¨gv
+[0], "wifi_signal") == 0) {
+
+31 
+	`gë_wifi_sig«l
+();
+
+32 } i‡(
+	`°rcmp
+(
+¨gv
+[0], "batt_power") == 0) {
+
+33 
+	`¥ötf
+("100\n");
+
+37 
+	}
+}
+
+	@stor.c
+
+3 
+	~"wdk.h
+"
+
+5 
+	#UHTTPD_NAME
+ "uhâpd"
+
+	)
+
+6 
+	#UHTTPD_CMDS
+ "/u§/sbö/"
+UHTTPD_NAME
+
+
+	)
+
+8 
+	#STOR_ROOT_PATH
+ "/medü"
+
+	)
+
+9 
+	#DISK_INFO_FILE
+ "/v¨/disköfo.txt"
+
+	)
+
+11 
+	$gë_fûe_size
+(*
+dú
+, *
+fûíame
+)
+
+13 
+°©
+ 
+°
+;
+
+14 
+disk_dú_fuŒ
+[100] = {0};
+
+16 
+	`°rˇt
+(
+disk_dú_fuŒ
+, 
+dú
+);
+
+17 
+	`°rˇt
+(
+disk_dú_fuŒ
+, 
+fûíame
+);
+
+18 
+	`°©
+(
+disk_dú_fuŒ
+, &
+°
+);
+
+19  
+°
+.
+°_size
+;
+
+20 
+	}
+}
+
+24 
+	$gë_fûe_size_°rög
+(*
+dú
+, *
+fûíame
+, *
+out_°rög
+)
+
+26 
+fûe_size
+ = 0;
+
+27 
+fûe_size
+ = 
+	`gë_fûe_size
+(
+dú
+, 
+fûíame
+);
+
+30 i‡(
+fûe_size
+ > 1000*1000*1000) {
+
+31 
+	`•rötf
+(
+out_°rög
+,"%0.2fGB", ()
+fûe_size
+/(1000*1000*1000));
+
+33 } i‡(
+fûe_size
+ > 1000*1000) {
+
+34 
+	`•rötf
+(
+out_°rög
+,"%0.2fMB", ()
+fûe_size
+/(1000*1000));
+
+36 } i‡(
+fûe_size
+ > 1000) {
+
+37 
+	`•rötf
+(
+out_°rög
+,"%0.2fKB", ()
+fûe_size
+/(1000));
+
+39 
+	`•rötf
+(
+out_°rög
+,"%dB", 
+fûe_size
+);
+
+43 
+	}
+}
+
+46 
+	$sŸr_ls_dú
+(*
+fûe_dú
+, *
+dú_öfo
+, *
+fûe_öfo
+)
+
+48 
+DIR
+ *
+d
+;
+
+49 
+dúít
+ *
+dú
+;
+
+50 
+disk_dú
+[100] = {0};
+
+51 
+fûe_Àngth
+[100] = {0};
+
+54 
+	`°rˇt
+(
+disk_dú
+, "/media");
+
+55 
+	`°rˇt
+(
+disk_dú
+, 
+fûe_dú
+);
+
+57 
+	`LOG
+("O≥nög %s!!!", 
+disk_dú
+);
+
+59 
+d
+ = 
+	`›ídú
+(
+disk_dú
+);
+
+60 i‡(
+d
+)
+
+62 
+	`°rˇt
+(
+dú_öfo
+, "1/0/../");
+
+63 (
+dú
+ = 
+	`ªaddú
+(
+d
+)Ë!
+NULL
+)
+
+65 i‡(
+dú
+->
+d_«me
+[0] == '.')
+
+68 i‡(
+dú
+->
+d_ty≥
+ =
+DT_REG
+) {
+
+69 
+	`°rˇt
+(
+fûe_öfo
+, "0/");
+
+70 
+	`gë_fûe_size_°rög
+(
+disk_dú
+, 
+dú
+->
+d_«me
+, 
+fûe_Àngth
+);
+
+71 
+	`°rˇt
+(
+fûe_öfo
+, 
+fûe_Àngth
+);
+
+72 
+	`°rˇt
+(
+fûe_öfo
+, "/");
+
+73 
+	`°rˇt
+(
+fûe_öfo
+, 
+dú
+->
+d_«me
+);
+
+74 
+	`°rˇt
+(
+fûe_öfo
+, "/");
+
+75 } i‡(
+dú
+->
+d_ty≥
+ ==
+DT_DIR
+) {
+
+76 
+	`°rˇt
+(
+dú_öfo
+, "1/0/");
+
+77 
+	`°rˇt
+(
+dú_öfo
+, 
+dú
+->
+d_«me
+);
+
+78 
+	`°rˇt
+(
+dú_öfo
+, "/");
+
+81 
+	`˛o£dú
+(
+d
+);
+
+83 
+	`LOG
+("Nÿsuch dú %s!!!", 
+disk_dú
+);
+
+87 
+	}
+}
+
+116 
+	$°‹_ls
+(*
+∑th
+)
+
+118 
+tmp
+[100] = {0};
+
+121 
+dú_öfo
+[1000] = {0};
+
+122 
+fûe_öfo
+[1000] = {0};
+
+124 
+	`LOG
+("DiskÇotÖresent");
+
+125 
+	`¥ötf
+("NoneDisk");
+
+127 i‡(0 !
+	`ac˚ss
+("/var/diskinfo.txt", 0)) {
+
+133 
+	`ªadlöe
+("/v¨/disköfo.txt", 
+tmp
+, (tmp));
+
+134 i‡(
+	`°æí
+(
+tmp
+) == 0)
+
+140 i‡(
+	`°rcmp
+(
+¨gv
+[0] , "/") == 0) {
+
+141 
+	`ªadlöe
+("/v¨/disköfo.txt", 
+tmp
+, (tmp));
+
+142 
+	`°rˇt
+(
+dú_öfo
+, "1/0/");
+
+143 
+tmp
+[
+	`°æí
+(tmp) -1] = 0;
+
+144 
+	`°rˇt
+(
+dú_öfo
+, 
+tmp
+ + 7);
+
+145 
+	`°rˇt
+(
+dú_öfo
+, "/");
+
+148 
+	`sŸr_ls_dú
+(
+¨gv
+[0], 
+dú_öfo
+, 
+fûe_öfo
+);
+
+150 
+	`LOG
+(">>> %s%s", 
+dú_öfo
+, 
+fûe_öfo
+);
+
+152 
+	`¥ötf
+("%s%sN⁄eDisk", 
+dú_öfo
+, 
+fûe_öfo
+);
+
+155 
+	}
+}
+
+168 
+	$°‹_rm
+(
+¨gc
+, **
+¨gv
+)
+
+170 
+hód_dú
+[100] = {0};
+
+171 
+fuŒ_dú
+[100] = {0};
+
+172 
+fuŒ_¨gv
+[1000] = {0};
+
+173 *
+p
+ = 
+fuŒ_¨gv
+;
+
+174 *
+íd
+ = 
+p
+;
+
+176 
+	`°r˝y
+(
+fuŒ_¨gv
+, 
+¨gv
+[0]);
+
+178 (*
+íd
+ != ' ') && (*end != 0)) {
+
+179 
+íd
+++;
+
+181 *
+íd
+ = 0x00;
+
+183 
+	`°r˝y
+(
+hód_dú
+, 
+p
+);
+
+184 
+p
+ = 
+íd
++1;
+
+185 
+íd
+ = 
+p
+;
+
+187 
+	`LOG
+("hód dú i†%s", 
+hód_dú
+);
+
+190 *
+íd
+ != '/')
+
+191 
+íd
+++;
+
+192 *
+íd
+ = 0;
+
+194 
+	`mem£t
+(
+fuŒ_dú
+, 0, (full_dir));
+
+195 
+	`°rˇt
+(
+fuŒ_dú
+, "/media");
+
+196 
+	`°rˇt
+(
+fuŒ_dú
+, 
+hód_dú
+);
+
+197 
+	`°rˇt
+(
+fuŒ_dú
+, 
+p
+);
+
+198 
+	`LOG
+("wû»ªmove:%s", 
+fuŒ_dú
+);
+
+199 
+	`u∆ök
+(
+fuŒ_dú
+);
+
+201 
+íd
+++;
+
+202 
+p
+ = 
+íd
+;
+
+203 i‡(*
+íd
+ == 0x00)
+
+208 
+	}
+}
+
+226 
+	$wdk_°‹
+(
+¨gc
+, **
+¨gv
+)
+
+228 
+ªt
+ = -1;
+
+230 i‡(
+¨gc
+ < 2) {
+
+231 
+	`LOG
+("ARGÅooÜess\n");
+
+233 i‡(
+¨gc
+ < 3) {
+
+234 
+	`LOG
+("ARG0=%s.ARG1=%s\n", 
+¨gv
+[0],árgv[1]);
+
+235 i‡(!
+	`°rcmp
+(
+¨gv
+[0], "ls")) {
+
+236 
+ªt
+ = 
+	`°‹_ls
+(
+¨gv
+[1]);
+
+239 i‡(
+¨gc
+ < 4) {
+
+240 
+	`LOG
+("ARG0=%s.ARG1=%s.ARG2=%s\n", 
+¨gv
+[0],árgv[1],árgv[2]);
+
+241 
+ªt
+ = 
+	`°‹_rm
+(
+¨gc
+-1, 
+¨gv
++1);
+
+244  
+ªt
+;
+
+245 
+	}
+}
+
+	@system.c
+
+4 
+	~"wdk.h
+"
+
+7 
+	$do_¡p
+()
+
+9 
+sys_¡p_svr1
+[100] = {0};
+
+10 
+sys_¡p_upd©e
+ = 0;
+
+11 
+sys_¡p_ªåy
+ = 0;
+
+13 
+	`cdb_gë
+("$sys_¡p_svr1", 
+sys_¡p_svr1
+);
+
+14 
+sys_¡p_upd©e
+ = 
+	`cdb_gë_öt
+("$sys_ntp_update", 0);
+
+15 
+sys_¡p_ªåy
+ = 
+	`cdb_gë_öt
+("$sys_ntp_retry", 0);
+
+18 i‡(0 =
+sys_¡p_ªåy
+)
+
+19 
+sys_¡p_ªåy
+ = 3;
+
+21 i‡(0 =
+sys_¡p_upd©e
+)
+
+22 
+sys_¡p_upd©e
+ = 86400;
+
+24 i‡(
+	`°æí
+(
+sys_¡p_svr1
+) == 0) {
+
+25 
+	`°r˝y
+(
+sys_¡p_svr1
+, "0.asia.pool.ntp.org");
+
+28 
+	`exec_cmd
+("killall -q -s 9Çtpclient");
+
+29 
+	`exec_cmd2
+("start-stop-daemon -S -x /usr/sbin/ntpclient -b -- -l -h %s -c %d -s -i %d",
+
+30 
+sys_¡p_svr1
+, 
+sys_¡p_ªåy
+, 
+sys_¡p_upd©e
+);
+
+31 
+	}
+}
+
+34 
+	$do_ho°«me
+()
+
+37 
+sys_«me
+[100] = {0};
+
+38 
+ho°«me
+[100] = {0};
+
+39 
+œn_ù
+[50] = {0};
+
+40 
+œn_ho°
+[50] = {0};
+
+43 
+	`cdb_gë
+("$sys_«me", 
+sys_«me
+);
+
+45 
+	`exec_cmd3
+(
+ho°«me
+, (hostname), "cat /proc/sys/kernel/hostname");
+
+46 i‡(
+	`°rcmp
+(
+ho°«me
+, 
+sys_«me
+) != 0) {
+
+47 
+	`LOG
+("Setting cdb sys_nameÅo kernel hostname");
+
+48 
+	`exec_cmd2
+("echÿ-¿ \"%s\" > /¥oc/sys/kî√l/ho°«me", 
+sys_«me
+);
+
+49 i‡(
+	`°rcmp
+(
+ho°«me
+, "(none)") != 0) {
+
+53 
+	`LOG
+("Setting /etc/hosts");
+
+54 
+	`wrôñöe
+("/etc/hosts", "127.0.0.1Üocalhost\n");
+
+56 
+	`cdb_gë
+("$œn_ù", 
+œn_ù
+);
+
+57 i‡((
+	`°æí
+(
+œn_ù
+Ë> 0Ë&& (°æí(
+sys_«me
+) > 0)) {
+
+58 
+	`•rötf
+(
+œn_ho°
+, "%†%s\n", 
+œn_ù
+, 
+sys_«me
+);
+
+59 
+	`LOG
+("Aµídög: %s", 
+œn_ho°
+);
+
+60 
+	`≠≥ndlöe
+("/ëc/ho°s", 
+œn_ho°
+);
+
+65 
+	}
+}
+
+68 
+	$do_timez⁄e
+()
+
+71 
+sys_day_öfo
+[20] = {0};
+
+72 
+timez⁄e
+ = 0;
+
+73 
+timez⁄e_gªp
+[200] = {0};
+
+74 
+timez⁄e_gªp_ªsu…
+[200] = {0};
+
+75 *
+p0
+ = 
+NULL
+;
+
+76 *
+p1
+ = 
+NULL
+;
+
+79 i‡(0 !
+	`ac˚ss
+("/lib/data/timezones.txt", 0)) {
+
+83 
+	`cdb_gë
+("$sys_day_öfo", 
+sys_day_öfo
+);
+
+84 i‡(
+	`°æí
+(
+sys_day_öfo
+) == 0)
+
+87 i‡(
+	`°rcmp
+(
+sys_day_öfo
+, "!ERR") == 0)
+
+90 
+	`ssˇnf
+(
+sys_day_öfo
+, "tz=%d", &
+timez⁄e
+);
+
+91 
+	`LOG
+("timez⁄e=%d", 
+timez⁄e
+);
+
+92 
+	`•rötf
+(
+timez⁄e_gªp
+, "ˇà/lib/d©a/timez⁄es.txà| gª∞'\"%d\"'", 
+timez⁄e
+);
+
+93 
+	`exec_cmd3
+(
+timez⁄e_gªp_ªsu…
+, —imez⁄e_gªp_ªsu…), 
+timez⁄e_gªp
+);
+
+95 
+	`LOG
+("Timez⁄êlöe=%s", 
+timez⁄e_gªp_ªsu…
+);
+
+97 
+p0
+ = 
+	`°r°r
+(
+timez⁄e_gªp_ªsu…
+, ",\"");
+
+98 
+p0
+ =Ö0+2;
+
+99 
+p1
+ = 
+p0
+;
+
+102 
+p1
+++;
+
+103 i‡((*
+p1
+ == '"') ||(*p1 == ',') )
+
+106 *
+p1
+ = '\n';
+
+107 *(
+p1
++1) = 0x00;
+
+109 
+	`LOG
+(">>Timez⁄e=%s", 
+p0
+);
+
+110 
+	`wrôñöe
+("/ëc/TZ", 
+p0
+);
+
+112 
+	}
+}
+
+114 
+	$do_w©chdog
+()
+
+117 
+sys_wd_í
+ = -1;
+
+118 
+sys_wd_idÀ
+ = -1;
+
+120 
+sys_wd_í
+ = 
+	`cdb_gë_öt
+("$sys_wd_en", 0);
+
+121 
+sys_wd_idÀ
+ = 
+	`cdb_gë_öt
+("$sys_wd_idle", 0);
+
+123 
+	`LOG
+("kill watchdog");
+
+124 
+	`exec_cmd
+("killall watchdog");
+
+125 i‡(1 =
+sys_wd_í
+) {
+
+126 
+	`LOG
+("Sèπög w©chdog wôh idÀ=%d", 
+sys_wd_idÀ
+);
+
+127 
+	`exec_cmd2
+("w©chdog -à5 -T %d /dev/w©chdog", 
+sys_wd_idÀ
+);
+
+129 
+	}
+}
+
+131 
+	$do_deÁu…
+()
+
+133 
+	`do_ho°«me
+();
+
+134 
+	`do_timez⁄e
+();
+
+135 
+	`do_w©chdog
+();
+
+136 
+	}
+}
+
+140 
+	$wdk_sy°em
+(
+¨gc
+, **
+¨gv
+)
+
+142 i‡(
+¨gc
+ == 0) {
+
+143 
+	`do_deÁu…
+();
+
+144 } if(
+¨gc
+ == 1) {
+
+145 
+	`LOG
+("Argumíài†%s", 
+¨gv
+[0]);
+
+146 if(
+	`°rcmp
+(
+¨gv
+[0], "ntp") == 0) {
+
+147 
+	`do_¡p
+();
+
+148 } if(
+	`°rcmp
+(
+¨gv
+[0], "hostname") == 0) {
+
+149 
+	`do_ho°«me
+();
+
+150 } if(
+	`°rcmp
+(
+¨gv
+[0], "timezone") == 0) {
+
+151 
+	`do_timez⁄e
+();
+
+152 } if(
+	`°rcmp
+(
+¨gv
+[0], "watchdog") == 0) {
+
+153 
+	`do_w©chdog
+();
+
+155 
+	`LOG
+("Unknown command");
+
+159 
+	`LOG
+("Unknown command");
+
+164 
+	}
+}
+
+	@sysupgrade.c
+
+2 
+	#_GNU_SOURCE
+
+
+	)
+
+3 
+	~"wdk.h
+"
+
+6 
+	#SYS_UP_FLASH_EXE
+ "/sbö/sysupgøde"
+
+	)
+
+7 
+	#SYS_UP_RAM_EXE
+ "/tmp/sysupgøde"
+
+	)
+
+13 
+	$‰ì_mem‹y
+(
+Æl
+)
+
+15 
+Æive_li°
+[200] = {0};
+
+16 
+kûl_li°
+[200] = {0};
+
+17 *
+WDKUPGRADE_KEEP_ALIVE
+ = 
+NULL
+;
+
+20 i‡(
+Æl
+)
+
+21 
+	`°rˇt
+(
+Æive_li°
+, "init\\|ash\\|watchdog\\|wdkupgrade\\|ps\\|$$");
+
+23 
+	`°rˇt
+(
+Æive_li°
+, "init\\|uhttpd\\|hostapd\\|ash\\|watchdog\\|wdkupgrade\\|http\\|ps\\|$$");
+
+25 
+WDKUPGRADE_KEEP_ALIVE
+ = 
+	`gëív
+("WDKUPGRADE_KEEP_ALIVE");
+
+27 i‡(
+NULL
+ !
+WDKUPGRADE_KEEP_ALIVE
+) {
+
+28 
+	`°rˇt
+(
+Æive_li°
+, "\\|");
+
+29 
+	`°rˇt
+(
+Æive_li°
+, 
+WDKUPGRADE_KEEP_ALIVE
+);
+
+33 
+	`LOG
+("Fªêmem‹yÇow,áŒ=%d", 
+Æl
+);
+
+34 
+	`exec_cmd3
+(
+kûl_li°
+, (kûl_li°), "p†| gª∞-v '%s' |áwk '{if(NR > 2Ë¥öà$1}' |Å∏'\n' ' ' | x¨g†kû»-9", 
+Æive_li°
+);
+
+35 
+	`wrôñöe
+("/proc/sys/vm/drop_caches", "3");
+
+36 
+	`exec_cmd
+("sync");
+
+39 
+	}
+}
+
+45 
+	$gë_Êash_size
+()
+
+47 
+Êash_size
+[100] = {0};
+
+48 
+	`exec_cmd3
+(
+Êash_size
+, (flash_size), "cat /proc/flash | grep \"firmware\" |áwk '{print $1}'");
+
+50 i‡(
+	`°æí
+(
+Êash_size
+) > 0)
+
+51  
+	`©oi
+(
+Êash_size
+);
+
+54 
+	}
+}
+
+61 
+	$ˇl_image_size
+()
+
+63 
+Êash_size
+[100] = {0};
+
+64 
+	`exec_cmd3
+(
+Êash_size
+, (flash_size), "wc -c /tmp/firmware |áwk '{print $1}'");
+
+66 i‡(
+	`°æí
+(
+Êash_size
+) > 0)
+
+67  
+	`©oi
+(
+Êash_size
+);
+
+70 
+	}
+}
+
+78 
+	$ˇl_backup_size
+()
+
+86 
+loˇl
+ 
+sizes
+=`
+ˇt
+ 
+$
+ {
+backup_li°
+} 2> /
+dev
+/
+nuŒ
+ | 
+ªad
+ 
+fûe
+;
+
+88 [ -
+d
+ 
+$fûe
+ ] && {
+
+89 
+du
+ -
+s
+ 
+$
+ {
+fûe
+} | 
+awk
+ '{print $1*1024}'
+
+91 
+wc
+ -
+c
+ 
+$
+{
+fûe
+} | 
+awk
+ '{print $1}'
+
+93 
+d⁄e
+`
+
+94 
+echo
+ "${sizes}" | 
+awk
+ '{sum += $1} END{print sum}'
+
+98 
+	}
+}
+
+110 
+	$check_fúmw¨e_vîsi⁄
+()
+
+112 
+sw_vî
+[100] = {0};
+
+113 
+fw_vî
+[100] = {0};
+
+115 
+	`cdb_gë
+("$sw_vî", 
+sw_vî
+);
+
+117 
+	`exec_cmd3
+(
+fw_vî
+, (fw_ver), "hexdump -s 24 -n 4 -e '\"%%d\"' %s", "/tmp/firmware" );
+
+118 i‡(
+	`©oi
+(
+fw_vî
+Ë=©oi(
+sw_vî
+)) {
+
+119 
+	`LOG
+("fúmw¨êvîsi⁄†¨êßmê%s, quô upd©e", 
+fw_vî
+);
+
+122 
+	`LOG
+("fúmw¨êvîsi⁄†nŸ samê%†!%s, mìàthê√ed", 
+fw_vî
+, 
+sw_vî
+);
+
+126 
+	}
+}
+
+129 
+	$check_Êash_size
+()
+
+131 
+ÊashSize
+ = 
+	`gë_Êash_size
+();
+
+132 
+imageSize
+ = 
+	`ˇl_image_size
+();
+
+133 
+backupSize
+ = 
+	`ˇl_backup_size
+();
+
+134 
+À·Size
+ = 0;
+
+136 i‡(0 =
+ÊashSize
+)
+
+137 
+ÊashSize
+ = 8388608;
+
+139 
+À·Size
+ = 
+ÊashSize
+ - 
+imageSize
+ - 
+backupSize
+;
+
+141 
+	`LOG
+(">>>>ÊashSizê%dByã", 
+ÊashSize
+);
+
+142 
+	`LOG
+(">>>>imageSizê%dByã", 
+imageSize
+);
+
+143 
+	`LOG
+(">>>>backupSizê%dByã", 
+backupSize
+);
+
+144 
+	`LOG
+(">>>>À·Sizê%dByã", 
+À·Size
+);
+
+147 i‡((
+À·Size
+ > 0Ë||(
+imageSize
+ <= 0)) {
+
+152 
+	}
+}
+
+155 
+	$check_b©ãry_°©us
+()
+
+158 
+	`LOG
+("No battery,Öass");
+
+160 
+	}
+}
+
+163 
+	$check_powîlöe_°©us
+()
+
+166 
+	`LOG
+("NoÖowerline,Öass");
+
+168 
+	}
+}
+
+172 
+	$check_checksum
+(*
+fúmw¨e_∑th
+)
+
+174 
+chksum
+[100] = {0};
+
+175 
+hwid
+[100] = {0};
+
+177 
+	`exec_cmd3
+(
+hwid
+, (hwid), "cat /proc/bootvars | grep id= | cut -d '=' -f 2" );
+
+178 
+	`exec_cmd3
+(
+chksum
+, (chksum), "chksum -ò%†-h %† -v 1;echÿ$?", 
+fúmw¨e_∑th
+, 
+hwid
+);
+
+179 i‡(
+	`©oi
+(
+chksum
+) == 1) {
+
+180 
+	`LOG
+("Firmware File chksum failed!");
+
+183 
+	`LOG
+("Firmware File chksumÖassed!");
+
+186 
+	}
+}
+
+196 
+	$check_fúmw¨e_upgøde
+()
+
+199 
+	`LOG
+("=======>check_firmware_upgrade for conditions");
+
+200 i‡(
+	`check_checksum
+("/tmp/firmware") == 1)
+
+203 i‡(
+	`check_fúmw¨e_vîsi⁄
+() == 1) {
+
+204 
+	`LOG
+("Cancel upgrade, Firmware VersionÅhe same!");
+
+209 i‡(
+	`check_Êash_size
+() == 0) {
+
+210 
+	`LOG
+("Cancel upgrade, Flash SpaceÇotÉnough!!");
+
+214 i‡(
+	`check_b©ãry_°©us
+() == 0) {
+
+215 
+	`LOG
+("Cancel upgrade, Low Battery!!");
+
+219 i‡(
+	`check_powîlöe_°©us
+() == 0) {
+
+220 
+	`LOG
+("Cancel upgrade, No Power Line!!");
+
+224 
+	`LOG
+("=======>check_firmware_upgrade done");
+
+228 
+	}
+}
+
+232 
+	$ªboŸ_dúe˘ly
+()
+
+234 
+	`LOG
+("Reboot Directly!!");
+
+235 
+	`exec_cmd
+("/sbin/reboot2");
+
+236 
+	`¶ìp
+(1);
+
+237 
+	`LOG
+("Oops!! Reboot Again!!");
+
+238 
+	`exec_cmd
+("/sbin/reboot2");
+
+239 
+	`exec_cmd
+("reboot");
+
+240 
+	}
+}
+
+242 
+	$dißbÀ_w©chdog
+()
+
+244 
+	`LOG
+( "kill watchdog!");
+
+245 
+	`exec_cmd
+("killall watchdog");
+
+246 
+	}
+}
+
+250 
+	$bef‹e_upgøde
+()
+
+253 i‡(
+	`f_exi°s
+("/tmp/wdkupgrade_before"))
+
+254 
+	`exec_cmd
+("/tmp/wdkupgrade_before");
+
+256 
+	`‰ì_mem‹y
+(1);
+
+258 i‡(
+	`f_isdú
+("/overlay/playlists)")) {
+
+259 
+	`wrôñöe
+("/tmp/backup.lst", "/overlay/playlists)");
+
+262 
+	`exec_cmd
+("cdbÑevert");
+
+263 
+	`exec_cmd
+("cdb commit");
+
+264 
+	}
+}
+
+266 
+	$a·î_upgøde
+()
+
+269 i‡(
+	`f_exi°s
+("/tmp/wdkupgrade_after")) {
+
+270 
+	`exec_cmd
+("/tmp/wdkupgrade_after");
+
+273 
+	`dißbÀ_w©chdog
+();
+
+274 
+	`LOG
+("after upgrade: done");
+
+275 
+	}
+}
+
+282 
+	$check_fúmw¨e_hódî
+(*
+∑th
+)
+
+284 
+FILE
+ *
+fw_Â
+;
+
+285 
+k
+[3] = {0};
+
+286 
+fw_Â
+=
+	`f›í
+(
+∑th
+,"r");
+
+287 
+	`‰ód
+(
+k
+,3,1,
+fw_Â
+);
+
+288 
+	`f˛o£
+(
+fw_Â
+);
+
+291 i‡((
+k
+[0] == 0x41) && (k[1] == 0x49) &&
+
+292 (
+k
+[2] == 0x48))
+
+297 
+	}
+}
+
+310 
+	$check_boŸ_exe
+(*
+∑th
+)
+
+312 
+FILE
+ *
+fw_Â
+;
+
+313 
+k
+[22] = {0};
+
+314 
+fw_Â
+=
+	`f›í
+(
+∑th
+,"r");
+
+315 
+	`‰ód
+(
+k
+,22,1,
+fw_Â
+);
+
+316 
+	`f˛o£
+(
+fw_Â
+);
+
+319 i‡(
+k
+[21] &0x10)
+
+323 
+	}
+}
+
+326 
+	$upgøde_c‹e
+()
+
+329 
+upd©e_ªsu…
+[100] = {0};
+
+335 i‡(1 =
+	`check_boŸ_exe
+("/tmp/firmware")) {
+
+337 
+	`LOG
+("Updating boot with bootexe..");
+
+338 
+	`exec_cmd
+("dd if=/tmp/firmware of=/tmp/firmware.tmp bs=1 skip=48; chmod +x /tmp/firmware.tmp; /tmp/firmware.tmp");
+
+340 
+	`LOG
+("Executing /tmp/sysupgrade");
+
+341 
+	`exec_cmd3
+(
+upd©e_ªsu…
+, (update_result), "/tmp/sysupgrade -v -b /tmp/backup.lst /tmp/firmware;echo $?");
+
+344 
+	`LOG
+("Upd©êªsu…=%s", 
+upd©e_ªsu…
+);
+
+346 
+	}
+}
+
+348 
+	$°¨t_upgøde
+(*
+dú
+, *
+fúmw¨e_«me
+)
+
+350 
+c›y_ªsu…
+[10] = {0};
+
+351 
+fw_∑th
+[100] = {0};
+
+352 
+	`°rˇt
+(
+fw_∑th
+, 
+dú
+);
+
+353 
+	`°rˇt
+(
+fw_∑th
+, "/");
+
+354 
+	`°rˇt
+(
+fw_∑th
+, 
+fúmw¨e_«me
+);
+
+356 
+	`LOG
+("O≥¿fúmw¨ê%†tÿcheckÅhêhódî", 
+fw_∑th
+);
+
+357 i‡(-1 =(
+	`check_fúmw¨e_hódî
+(
+fw_∑th
+))) {
+
+358 
+	`LOG
+("firmware header check failed");
+
+361 
+	`LOG
+("firmware header checkÖassed");
+
+364 
+	`‰ì_mem‹y
+(0);
+
+366 
+	`LOG
+("C›y fûê‰om %†tÿ/tmp/fúmw¨e", 
+fw_∑th
+);
+
+367 
+	`exec_cmd3
+(
+c›y_ªsu…
+, (c›y_ªsu…Ë, "˝ %†/tmp/fúmw¨e;echÿ$?", 
+fw_∑th
+);
+
+369 i‡(
+	`°rcmp
+(
+c›y_ªsu…
+, "0") != 0) {
+
+370 
+	`LOG
+("Copy file failed");
+
+371 
+upd©e_íd
+;
+
+375 
+	`bef‹e_upgøde
+();
+
+376 i‡(1 =
+	`check_fúmw¨e_upgøde
+()) {
+
+377 
+	`LOG
+("Firmware Upgrade failed");
+
+378 
+upd©e_íd
+;
+
+381 
+	`upgøde_c‹e
+();
+
+383 
+upd©e_íd
+:
+
+384 
+	`a·î_upgøde
+();
+
+385 
+	`¶ìp
+(3);
+
+386 
+	`ªboŸ_dúe˘ly
+();
+
+388 
+	}
+}
+
+391 
+	$sˇn_usb_mmc
+()
+
+394 
+FILE
+ *
+°ªam
+;
+
+395 *
+löe
+ = 
+NULL
+;
+
+396 
+size_t
+ 
+Àn
+ = 0;
+
+397 
+ssize_t
+ 
+ªad
+;
+
+399 
+sys_auto_upgøde_«me
+[100] = {0};
+
+400 
+	`cdb_gë
+("$sys_auto_upgøde_«me", 
+sys_auto_upgøde_«me
+);
+
+403 
+	`LOG
+("Read file content of /var/diskinfo.txt");
+
+404 
+°ªam
+ = 
+	`f›í
+("/var/diskinfo.txt", "r");
+
+405 i‡(
+°ªam
+ =
+NULL
+) {
+
+406 
+	`LOG
+("Result showsÇo disk inserted");
+
+410 (
+ªad
+ = 
+	`gëlöe
+(&
+löe
+, &
+Àn
+, 
+°ªam
+)) != -1) {
+
+411 
+löe
+[
+	`°æí
+(line) -1] = 0x00;
+
+412 
+	`LOG
+("Found st‹agêdevi˚:%s, sèπÅÿ£¨ch f‹ %s", 
+löe
+, 
+sys_auto_upgøde_«me
+);
+
+414 
+DIR
+ *
+d
+ = 
+NULL
+;
+
+415 
+dúít
+ *
+dú
+ = 
+NULL
+;
+
+416 
+d
+ = 
+	`›ídú
+(
+löe
+);
+
+417 i‡(
+d
+) {
+
+418 (
+dú
+ = 
+	`ªaddú
+(
+d
+)Ë!
+NULL
+) {
+
+419 i‡(
+dú
+->
+d_«me
+[0] == '.')
+
+421 i‡((
+dú
+->
+d_ty≥
+ =
+DT_REG
+Ë&& (
+	`°rcmp
+(dú->
+d_«me
+, 
+sys_auto_upgøde_«me
+) == 0)) {
+
+422 
+	`LOG
+("Found fúmw¨e:%s/%s, sèπÅÿupgøde", 
+löe
+, 
+dú
+->
+d_«me
+);
+
+423 
+	`°¨t_upgøde
+(
+löe
+, 
+sys_auto_upgøde_«me
+);
+
+426 
+	`˛o£dú
+(
+d
+);
+
+428 
+	`LOG
+("›ídú %† faûed,Éº%d", 
+löe
+, 
+î∫o
+);
+
+432 
+	`LOG
+("Search End");
+
+433 
+	`‰ì
+(
+löe
+);
+
+434 
+	`f˛o£
+(
+°ªam
+);
+
+436 
+	}
+}
+
+448 
+	$auto_fúmw¨e_upgøde
+(*
+∑ø
+)
+
+450 
+sys_auto_upgøde
+ = 0;
+
+452 
+sys_auto_upgøde
+ = 
+	`cdb_gë_öt
+("$sys_auto_upgrade", 0);
+
+454 i‡(0 =
+sys_auto_upgøde
+) {
+
+455 
+	`LOG
+("cdb checked sys_auto_upgrade is 0,áuto upgrade firmwareÉxit");
+
+459 
+	`LOG
+("Scanning disk for firmware upgrade");
+
+467 
+	`sˇn_usb_mmc
+();
+
+470 
+	}
+}
+
+477 
+	$web_fúmw¨e_upgøde
+()
+
+480 
+fúmw¨e_ªady
+ = -1;
+
+481 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_ONGOING
+);
+
+482 
+	`‰ì_mem‹y
+(0);
+
+483 
+fúmw¨e_ªady
+ = 
+	`check_fúmw¨e_upgøde
+();
+
+485 i‡(
+fúmw¨e_ªady
+ != 0) {
+
+486 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_FAILURE
+);
+
+487 
+	`LOG
+("check failed, DoÇothing");
+
+488 
+upd©e_íd
+;
+
+490 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_FWSTART
+);
+
+491 
+	`¶ìp
+(3);
+
+492 
+	`bef‹e_upgøde
+();
+
+494 
+	`LOG
+("Writing firmware_fileÅo flash...");
+
+495 
+	`upgøde_c‹e
+();
+
+499 
+	`upd©e_u∂ﬂd_°©e
+(
+WEB_STATE_SUCCESS
+);
+
+501 
+upd©e_íd
+:
+
+502 
+	`a·î_upgøde
+();
+
+503 
+	`¶ìp
+(3);
+
+504 
+	`ªboŸ_dúe˘ly
+();
+
+506 
+	}
+}
+
+517 
+	$wdk_sysupgøde
+(
+¨gc
+, **
+¨gv
+)
+
+520 
+∑th
+[1024] = {0};
+
+521 
+d´m⁄_cmd
+[1024] = {0};
+
+522 
+i
+ = 0;
+
+524 
+	`gë_£lf_∑th
+(
+∑th
+, (path));
+
+526 
+	`LOG
+("sysupgødêi†cuª¡lyáà%s", 
+∑th
+);
+
+527 i‡(
+	`°rcmp
+("/lib/wdk/wdk-bö", 
+∑th
+) == 0) {
+
+528 
+	`exec_cmd
+("cp /sbin/sysupgrade /tmp/sysupgrade");
+
+529 
+	`exec_cmd
+("cp /lib/wdk/sysupgrade /tmp/wdkupgrade");
+
+531 i‡(
+	`f_exi°s
+("/lib/wdk/sysupgrade_before")) {
+
+532 
+	`exec_cmd
+("cp /lib/wdk/sysupgrade_before /tmp/wdkupgrade_before");
+
+533 
+	`exec_cmd
+("chmod +x /tmp/wdkupgrade_before");
+
+536 i‡(
+	`f_exi°s
+("/lib/wdk/sysupgrade_after")) {
+
+537 
+	`exec_cmd
+("cp /lib/wdk/sysupgrade_after /tmp/wdkupgrade_after");
+
+538 
+	`exec_cmd
+("chmod +x /tmp/wdkupgrade_after");
+
+541 
+i
+ = 0; i < 
+¨gc
+; i++) {
+
+542 
+	`°rˇt
+(
+d´m⁄_cmd
+, 
+¨gv
+[
+i
+]);
+
+543 
+	`°rˇt
+(
+d´m⁄_cmd
+, " ");
+
+546 
+	`LOG
+("Pas†d´m⁄ cmd = %s", 
+d´m⁄_cmd
+);
+
+547 
+	`exec_cmd2
+("°¨t-°›-d´m⁄ -S -N -10 -x /tmp/wdkupgødê-b -- %s", 
+d´m⁄_cmd
+);
+
+548 } i‡(
+	`°rcmp
+("/tmp/wdkupgøde", 
+∑th
+) == 0) {
+
+549 i‡((
+¨gc
+ > 1Ë&& 
+	`°rcmp
+(
+¨gv
+[0], "auto") == 0) {
+
+550 i‡(
+¨gc
+ >= 2) {
+
+551 
+	`LOG
+("E¡îáuto_fúmw¨e_upgøde,árgumíà%s", 
+¨gv
+[1]);
+
+552 
+	`auto_fúmw¨e_upgøde
+(
+¨gv
+[1]);
+
+554 
+	`LOG
+("Enteráuto_firmware_upgrade");
+
+555 
+	`auto_fúmw¨e_upgøde
+(
+NULL
+);
+
+558 
+	`LOG
+("Enter web_firmware_upgrade");
+
+559 
+	`web_fúmw¨e_upgøde
+();
+
+565 
+	}
+}
+
+	@time.c
+
+2 
+	~"wdk.h
+"
+
+18 
+	$wdk_time
+(
+¨gc
+, **
+¨gv
+)
+
+21 
+cmd_buf„r
+[100] = {0};
+
+22 
+d©e_£t_°r
+[100] = {0};
+
+23 
+i
+ = 0;
+
+24 i‡(
+¨gc
+ == 0) {
+
+25 
+	`ªadlöe
+("/¥oc/u±ime", 
+cmd_buf„r
+, (cmd_buffer));
+
+26 
+cmd_buf„r
+[
+i
+++] != '.')
+
+28 
+cmd_buf„r
+[
+i
+-1] = 0x00;
+
+29 
+	`¥ötf
+("%s\n", 
+cmd_buf„r
+);
+
+30 } i‡(
+¨gc
+ >= 1) {
+
+31 i‡(
+	`°rcmp
+(
+¨gv
+[0], "ntp") == 0) {
+
+32 
+	`exec_cmd3
+(
+cmd_buf„r
+, (cmd_buffer), "date +%%s");
+
+33 
+	`¥ötf
+("%s\n", 
+cmd_buf„r
+);
+
+34 } i‡(
+	`°rcmp
+(
+¨gv
+[0], "ntpstr") == 0) {
+
+35 
+	`exec_cmd3
+(
+cmd_buf„r
+, (cmd_buffer), "date +%%c");
+
+36 
+	`¥ötf
+("%s\n", 
+cmd_buf„r
+);
+
+37 } i‡(
+	`°rcmp
+(
+¨gv
+[0], "sync") == 0) {
+
+38 
+	`exec_cmd3
+(
+d©e_£t_°r
+, (d©e_£t_°r), "echÿ'' |áwk '{¥öà°r·ime(\"%%F %%T\", %s)}'", 
+¨gv
+[1]);
+
+39 
+	`¥ötf
+("%s\n", 
+d©e_£t_°r
+);
+
+40 
+	`exec_cmd2
+("d©ê-†\"%s\"", 
+d©e_£t_°r
+);
+
+42 
+	`¥ötf
+("Please inputÑightÖaramenter:[ntpstr/ntp/(empty)]");
+
+47 
+	}
+}
+
+	@upload.c
+
+4 
+	~"wdk.h
+"
+
+22 
+	$wdk_u∂ﬂd
+(
+¨gc
+, **
+¨gv
+)
+
+25 *
+REMOTE_ADDR
+ = 
+NULL
+;
+
+26 
+u∂ﬂd_°©e_£À˘
+[100] = {0};
+
+27 
+cuºít_°©e
+[10] = {0};
+
+29 i‡(
+¨gc
+ != 2)
+
+32 i‡(!
+	`°r_equÆ
+(
+¨gv
+[0], "state"))
+
+35 
+REMOTE_ADDR
+ = 
+	`gëív
+("REMOTE_ADDR");
+
+36 i‡(
+NULL
+ =
+REMOTE_ADDR
+)
+
+39 
+	`•rötf
+(
+u∂ﬂd_°©e_£À˘
+, "%†%s", 
+REMOTE_ADDR
+, 
+¨gv
+[1]);
+
+41 
+	`exec_cmd3
+(
+cuºít_°©e
+, (current_state),
+
+43 
+u∂ﬂd_°©e_£À˘
+);
+
+45 
+	`LOG
+("u∂ﬂd_°©e_£À˘ = %s, cuºít_°©e%s", 
+u∂ﬂd_°©e_£À˘
+, 
+cuºít_°©e
+);
+
+48 i‡((
+	`©oi
+(
+cuºít_°©e
+Ë=
+WEB_STATE_SUCCESS
+) ||
+
+49 (
+	`©oi
+(
+cuºít_°©e
+Ë=
+WEB_STATE_FAILURE
+)) {
+
+50 
+	`exec_cmd2
+("£d -ò\"/%†/d\" /tmp/u∂ﬂd_°©e", 
+u∂ﬂd_°©e_£À˘
+);
+
+53 i‡(
+	`°æí
+(
+cuºít_°©e
+) > 0)
+
+54 
+	`¥ötf
+("%s", 
+cuºít_°©e
+);
+
+56 
+	`¥ötf
+("%d", 
+WEB_STATE_DEFAULT
+);
+
+60 
+	}
+}
+
+	@upnp.c
+
+4 
+	~"wdk.h
+"
+
+27 
+	$show_Àa£
+()
+
+29 
+Àa£_löe
+[200] = {0};
+
+30 
+¥Ÿo
+[100] = {0};
+
+31 
+üddr
+[100] = {0};
+
+32 
+ï‹t
+[100] = {0};
+
+33 
+ù‹t
+[100] = {0};
+
+34 
+desc
+[100] = {0};
+
+36 *
+p
+ = 
+NULL
+;
+
+37 
+	`ªadlöe
+("/v¨/Àa£", 
+Àa£_löe
+, (lease_line));
+
+38 
+p
+ = 
+Àa£_löe
+ + 
+	`°æí
+(lease_line) -1;
+
+40 *
+p
+-- != ':');
+
+41 *(
+p
++1) = 0x00;
+
+42 
+	`°r˝y
+(
+desc
+, 
+p
+ + 2);
+
+45 *
+p
+-- != ':');
+
+46 *(
+p
++1) = 0x00;
+
+47 
+	`°r˝y
+(
+ù‹t
+, 
+p
+ + 2);
+
+49 *
+p
+-- != ':');
+
+50 *(
+p
++1) = 0x00;
+
+51 
+	`°r˝y
+(
+üddr
+, 
+p
+ + 2);
+
+53 *
+p
+-- != ':');
+
+54 *(
+p
++1) = 0x00;
+
+55 
+	`°r˝y
+(
+ï‹t
+, 
+p
+ + 2);
+
+57 
+	`°r˝y
+(
+¥Ÿo
+, 
+Àa£_löe
+);
+
+59 
+	`¥ötf
+("gp=%s&lù=%s&Õ=%s&¥Ÿ=%s&desc=%s", 
+ï‹t
+, 
+üddr
+, 
+ù‹t
+, 
+¥Ÿo
+, 
+desc
+);
+
+61 
+	}
+}
+
+63 
+	$wdk_u≤p
+(
+¨gc
+, **
+¨gv
+)
+
+65 i‡(
+¨gc
+ == 0)
+
+68 i‡(
+	`°rcmp
+(
+¨gv
+[0], "map") == 0) {
+
+69 
+	`show_Àa£
+();
+
+73 
+	}
+}
+
+	@wan.c
+
+1 
+	~"wdk.h
+"
+
+4 
+	$wdk_w™
+(
+¨gc
+, **
+¨gv
+)
+
+6 i‡(
+¨gc
+ == 0) {
+
+7 
+	`¥ötf
+("usage:/lib/wdk/wan [connect/release]\n");
+
+9 } if(
+¨gc
+ == 1) {
+
+11 
+	`puãnv
+("manual_onoff=1");
+
+13 i‡(
+	`°rcmp
+("c⁄√˘", 
+¨gv
+[0]) == 0) {
+
+14 
+	`exec_cmd
+("/etc/init.d/wan stop");
+
+15 
+	`exec_cmd
+("/etc/init.d/wan start");
+
+16 } i‡(
+	`°rcmp
+("ªÀa£", 
+¨gv
+[0]) == 0) {
+
+17 
+	`exec_cmd
+("/etc/init.d/wan stop");
+
+25 
+	}
+}
+
+	@wdk.c
+
+1 
+	~"wdk.h
+"
+
+3 
+	gg_log_⁄
+;
+
+10 
+ölöe
+ 
+	$dump_fûe
+(*
+fûe_∑th
+) {
+
+11 
+FILE
+ *
+Â
+ = 
+	`f›í
+(
+fûe_∑th
+, "r");
+
+12 
+buf
+[200] = {0};
+
+13 
+	`fgës
+(
+buf
+, (buf), 
+Â
+Ë!
+NULL
+ ) {
+
+14 
+	`¥ötf
+("%s", 
+buf
+);
+
+16 
+	}
+}
+
+20 
+ölöe
+ 
+	$°r_equÆ
+(*
+°r1
+, *
+°r2
+)
+
+22  (
+	`°rcmp
+(
+°r1
+,
+°r2
+) == 0);
+
+23 
+	}
+}
+
+26 
+	$timevÆdiff
+(
+timevÆ
+ *
+°¨âime
+, timevÆ *
+föishtime
+)
+
+28 
+m£c
+;
+
+29 
+m£c
+ = (
+föishtime
+->
+tv_£c
+ - 
+°¨âime
+->tv_sec) * 1000;
+
+30 
+m£c
+ +(
+föishtime
+->
+tv_u£c
+ - 
+°¨âime
+->tv_usec) / 1000;
+
+31  
+m£c
+;
+
+32 
+	}
+}
+
+34 
+	$gëtimevÆdiff
+(
+timevÆ
+ *
+°¨t_tv
+)
+
+36 
+timevÆ
+ 
+tv
+;
+
+37 
+timevÆ
+ *
+íd_tv
+ = &
+tv
+;
+
+38 
+	`gëtimeofday
+(
+íd_tv
+, 
+NULL
+);
+
+39  
+	`timevÆdiff
+(
+°¨t_tv
+, 
+íd_tv
+);
+
+40 
+	}
+}
+
+42 
+	$gëtimeofbegö
+(
+timevÆ
+ *
+°¨t_tv
+)
+
+44 
+	`gëtimeofday
+(
+°¨t_tv
+, 
+NULL
+);
+
+45 
+	}
+}
+
+49 
+	$gë_shñl_ªsu…
+(*
+comm™d
+, *
+ªsu…
+, 
+ªsu…_Àn
+)
+
+51 
+FILE
+ *
+Â
+ = 
+NULL
+;
+
+52 
+Â
+ = 
+	`p›í
+(
+comm™d
+, "r");
+
+53 i‡(
+Â
+ =
+NULL
+) {
+
+54 
+	`LOG
+("FailedÅoÑun command\n" );
+
+57 
+	`fgës
+(
+ªsu…
+, 
+ªsu…_Àn
+, 
+Â
+Ë!
+NULL
+) {
+
+60 
+	`p˛o£
+(
+Â
+);
+
+62 
+	}
+}
+
+66 
+	$upd©e_u∂ﬂd_°©e
+(
+°©e
+)
+
+68 
+FILE
+ *
+Â
+ = 
+NULL
+;
+
+69 *
+ªmŸe_addr
+ = 
+NULL
+;
+
+70 *
+fûe_id
+ = 
+NULL
+;
+
+72 
+ªmŸe_addr
+ = 
+	`gëív
+("REMOTE_ADDR");
+
+73 i‡(
+NULL
+ =
+ªmŸe_addr
+)
+
+76 
+fûe_id
+ = 
+	`gëív
+("FILE_ID");
+
+77 i‡(
+NULL
+ =
+fûe_id
+)
+
+80 if–(
+Â
+ = 
+	`f›í
+(
+WEB_UPLOAD_STATE
+, "a+")) ) {
+
+81 
+	`Ârötf
+(
+Â
+, "%†%†%u %u\n", 
+ªmŸe_addr
+, 
+fûe_id
+, 
+°©e
+, ()
+	`time
+(
+NULL
+));
+
+82 
+	`fÊush
+(
+Â
+);
+
+83 
+	`fsync
+(
+	`fûío
+(
+Â
+));
+
+84 
+	`f˛o£
+(
+Â
+);
+
+85 
+	`LOG
+("%s: sèã=%d ip=%†id=%s\n", 
+__func__
+, 
+°©e
+, 
+ªmŸe_addr
+, 
+fûe_id
+);
+
+87 
+	}
+}
+
+91 
+wdk_¥ogøm
+ 
+	g¥ogøms
+[] = {
+
+94 .
+«me
+ = "sleep",
+
+95 .
+	gdes¸ùti⁄
+ = "sleep forá while.\n"
+
+99 .
+	gfun˘i⁄
+ = 
+wdk_¶ìp
+,
+
+102 .
+	g«me
+ = "ap",
+
+103 .
+	gdes¸ùti⁄
+ = "scan or get formatted scan_result\n"
+
+107 .
+	gfun˘i⁄
+ = 
+wdk_≠
+,
+
+110 .
+	g«me
+ = "cdbreset",
+
+111 .
+	gdes¸ùti⁄
+ = "erase mtd1, youÇeedÅoÑebootáfterÅhis operation",
+
+112 .
+	gfun˘i⁄
+ = 
+wdk_cdbª£t
+,
+
+116 .
+	g«me
+ = "debug",
+
+117 .
+	gdes¸ùti⁄
+ = "debugÅhe command,ÖrintÅhe cmdándÖrintÅhe output",
+
+118 .
+	gfun˘i⁄
+ = 
+wdk_debug
+,
+
+122 .
+	g«me
+ = "dhcps",
+
+123 .
+	gdes¸ùti⁄
+ = "dhcp set/leases/num",
+
+124 .
+	gfun˘i⁄
+ = 
+wdk_dh˝s
+,
+
+128 .
+	g«me
+ = "get_channel",
+
+129 .
+	gdes¸ùti⁄
+ = "get current wifi channel",
+
+130 .
+	gfun˘i⁄
+ = 
+wdk_gë_ch™√l
+,
+
+134 .
+	g«me
+ = "logout",
+
+135 .
+	gdes¸ùti⁄
+ = "logout from http??",
+
+136 .
+	gfun˘i⁄
+ = 
+wdk_logout
+,
+
+140 .
+	g«me
+ = "ping",
+
+141 .
+	gdes¸ùti⁄
+ = "pingánd getÑesult",
+
+142 .
+	gfun˘i⁄
+ = 
+wdk_pög
+,
+
+145 .
+	g«me
+ = "reboot",
+
+146 .
+	gdes¸ùti⁄
+ = "rebootÜinux system",
+
+147 .
+	gfun˘i⁄
+ = 
+wdk_ªboŸ
+,
+
+150 .
+	g«me
+ = "route",
+
+151 .
+	gdes¸ùti⁄
+ = "routeÅable setting",
+
+152 .
+	gfun˘i⁄
+ = 
+wdk_rouã
+,
+
+155 .
+	g«me
+ = "wan",
+
+156 .
+	gdes¸ùti⁄
+ = "connect orÑelease wan connection",
+
+157 .
+	gfun˘i⁄
+ = 
+wdk_w™
+,
+
+160 .
+	g«me
+ = "mangment",
+
+161 .
+	gdes¸ùti⁄
+ = "override httpd.conf userándÖassword with cdb value",
+
+162 .
+	gfun˘i⁄
+ = 
+wdk_m™gmít
+,
+
+166 .
+	g«me
+ = "sta",
+
+167 .
+	gdes¸ùti⁄
+ = "dump current STA(s) connectedÅoÅhis AP",
+
+168 .
+	gfun˘i⁄
+ = 
+wdk_°a
+,
+
+172 .
+	g«me
+ = "stor",
+
+173 .
+	gdes¸ùti⁄
+ = "delete orÜs file in Disk Drive",
+
+174 .
+	gfun˘i⁄
+ = 
+wdk_°‹
+,
+
+178 .
+	g«me
+ = "stapoll",
+
+179 .
+	gdes¸ùti⁄
+ = "check current sta0 channelándápplyÅo wlan0 byÑestarting service",
+
+180 .
+	gfun˘i⁄
+ =
+wdk_°≠ﬁl
+,
+
+184 .
+	g«me
+ = "status",
+
+185 .
+	gdes¸ùti⁄
+ = "getÅhe status of wifi signal or batteryÖower",
+
+186 .
+	gfun˘i⁄
+ =
+wdk_°©us
+,
+
+190 .
+	g«me
+ = "system",
+
+191 .
+	gdes¸ùti⁄
+ = "setÇtp,hostname,timezoneánd watchdog",
+
+192 .
+	gfun˘i⁄
+ =
+wdk_sy°em
+,
+
+197 .
+	g«me
+ = "http",
+
+198 .
+	gdes¸ùti⁄
+ = "http",
+
+199 .
+	gfun˘i⁄
+ =
+wdk_hâp
+,
+
+204 .
+	g«me
+ = "sysupgrade",
+
+205 .
+	gdes¸ùti⁄
+ = "sysupgrade in /lib/wdk dir",
+
+206 .
+	gfun˘i⁄
+ =
+wdk_sysupgøde
+,
+
+211 .
+	g«me
+ = "wdkupgrade",
+
+212 .
+	gdes¸ùti⁄
+ = "sysupgrade inÅmp dir ",
+
+213 .
+	gfun˘i⁄
+ =
+wdk_sysupgøde
+,
+
+217 .
+	g«me
+ = "time",
+
+218 .
+	gdes¸ùti⁄
+ = "get some information ofÅime ",
+
+219 .
+	gfun˘i⁄
+ =
+wdk_time
+,
+
+224 .
+	g«me
+ = "upnp",
+
+225 .
+	gdes¸ùti⁄
+ = "get some information of miniupnpdÜease",
+
+226 .
+	gfun˘i⁄
+ =
+wdk_u≤p
+,
+
+230 .
+	g«me
+ = "cdbupload",
+
+231 .
+	gdes¸ùti⁄
+ = "get some information of miniupnpdÜease",
+
+232 .
+	gfun˘i⁄
+ =
+wdk_cdbu∂ﬂd
+,
+
+236 .
+	g«me
+ = "log",
+
+237 .
+	gdes¸ùti⁄
+ = "send mailll",
+
+238 .
+	gfun˘i⁄
+ =
+wdk_log
+,
+
+242 .
+	g«me
+ = "logconf",
+
+243 .
+	gdes¸ùti⁄
+ = "start syslogd",
+
+244 .
+	gfun˘i⁄
+ =
+wdk_logc⁄f
+,
+
+248 .
+	g«me
+ = "upload",
+
+249 .
+	gdes¸ùti⁄
+ = "query upload status",
+
+250 .
+	gfun˘i⁄
+ =
+wdk_u∂ﬂd
+,
+
+254 .
+	g«me
+ = "wps",
+
+255 .
+	gdes¸ùti⁄
+ = "wps 0/1 status/button/pin/cancel/genpin",
+
+256 .
+	gfun˘i⁄
+ = 
+wdk_wps
+,
+
+261 .
+	g«me
+ = "smbc",
+
+262 .
+	gdes¸ùti⁄
+ = "uploadÜocal media filesÅo samba server",
+
+263 .
+	gfun˘i⁄
+ = 
+wdk_smbc
+,
+
+269 
+	$gë_£lf_∑th
+(*
+buf
+, 
+Àn
+) {
+
+270 
+szTmp
+[32] = {0};
+
+271 
+	`•rötf
+(
+szTmp
+, "/¥oc/%d/exe", 
+	`gëpid
+());
+
+272 
+byãs
+ = 
+	`ªadlök
+(
+szTmp
+, 
+buf
+, 
+Àn
+);
+
+273  
+byãs
+;
+
+274 
+	}
+}
+
+276 
+	$ªadlöe
+(*
+∑th
+, * 
+buf„r
+, 
+buf„r_size
+)
+
+278 
+FILE
+ * 
+Â
+ = 
+NULL
+;
+
+279 
+Â
+ = 
+	`f›í
+(
+∑th
+, "r");
+
+280 i‡(
+Â
+ =
+NULL
+) {
+
+281 
+	`LOG
+("›í fûê%†Áûed", 
+∑th
+);
+
+285 if((
+	`fgës
+(
+buf„r
+, 
+buf„r_size
+, 
+Â
+))!=
+NULL
+) {
+
+286 
+	`f˛o£
+(
+Â
+);
+
+289 
+	`LOG
+("Âut†fûê%†Áûed", 
+∑th
+);
+
+290 
+	`f˛o£
+(
+Â
+);
+
+293 
+	}
+}
+
+295 
+	$wrôñöe
+(*
+∑th
+, * 
+buf„r
+) {
+
+296 
+FILE
+ * 
+Â
+ = 
+NULL
+;
+
+297 
+Â
+ = 
+	`f›í
+(
+∑th
+, "w");
+
+298 i‡(
+Â
+ =
+NULL
+) {
+
+299 
+	`LOG
+("›í fûê%†Áûed", 
+∑th
+);
+
+302 if((
+	`Âuts
+(
+buf„r
+, 
+Â
+)) >= 0) {
+
+303 
+	`f˛o£
+(
+Â
+);
+
+306 
+	`LOG
+("Âut†fûê%†Áûed", 
+∑th
+);
+
+307 
+	`f˛o£
+(
+Â
+);
+
+310 
+	}
+}
+
+312 
+	$≠≥ndlöe
+(*
+∑th
+, * 
+buf„r
+) {
+
+313 
+FILE
+ * 
+Â
+ = 
+NULL
+;
+
+314 
+Â
+ = 
+	`f›í
+(
+∑th
+, "a");
+
+315 i‡(
+Â
+ =
+NULL
+) {
+
+316 
+	`LOG
+("›í fûê%†Áûed", 
+∑th
+);
+
+319 if(
+	`Âuts
+(
+buf„r
+, 
+Â
+) >= 0) {
+
+320 
+	`f˛o£
+(
+Â
+);
+
+323 
+	`LOG
+("Âut†fûê%†Áûed", 
+∑th
+);
+
+324 
+	`f˛o£
+(
+Â
+);
+
+327 
+	}
+}
+
+330 
+	$íabÀ_debug
+(
+íabÀ
+) {
+
+331 i‡(
+íabÀ
+) {
+
+332 
+	`puãnv
+("WDK_DBG=1");
+
+334 
+	`puãnv
+("WDK_DBG=0");
+
+336 
+	}
+}
+
+339 
+	$check_debug
+()
+
+341 
+íabÀ
+ = 0;
+
+343 *
+vÆue
+ = 
+	`gëív
+("WDK_DBG");
+
+344 i‡(
+NULL
+ !
+vÆue
+) {
+
+345 i‡(
+	`°rcmp
+(
+vÆue
+, "1") == 0)
+
+346 
+íabÀ
+ = 1;
+
+348  
+íabÀ
+;
+
+349 
+	}
+}
+
+352 
+	$debug_⁄
+()
+
+354 
+g_log_⁄
+ = 1;
+
+355 
+	}
+}
+
+362 
+	$¥ogøm_exi°s
+(*
+¥ogøm_«me
+)
+
+364 
+DIR
+ *
+dú
+ = 
+NULL
+;
+
+365 
+dúít
+ *
+dú_íåy
+;
+
+366 
+exi°
+ = 0;
+
+368 
+dú
+ = 
+	`›ídú
+("/lib/wdk");
+
+369 i‡(
+NULL
+ !
+dú
+) {
+
+370 (
+dú_íåy
+ = 
+	`ªaddú
+(
+dú
+)Ë!
+NULL
+) {
+
+371 
+	`¥ötf
+("\t%s\n", 
+dú_íåy
+->
+d_«me
+ );
+
+372 i‡(
+	`°rcmp
+(
+dú_íåy
+->
+d_«me
+, 
+¥ogøm_«me
+) == 0)
+
+373 
+exi°
+ = 1;
+
+375 (Ë
+	`˛o£dú
+(
+dú
+);
+
+378  
+exi°
+;
+
+379 
+	}
+}
+
+382 
+	$¥öt_avaûabÀ_¥ogøm
+()
+
+384 
+i
+ = 0;
+
+385 
+i
+ = 0; i < (
+¥ogøms
+)/(programs[0]); i++) {
+
+386 
+	`¥ötf
+("* ");
+
+387 
+	`¥ötf
+(
+¥ogøms
+[
+i
+].
+«me
+);
+
+388 
+	`¥ötf
+(":\n");
+
+389 
+	`¥ötf
+(
+¥ogøms
+[
+i
+].
+des¸ùti⁄
+);
+
+390 
+	`¥ötf
+("\n");
+
+392 
+	}
+}
+
+395 
+	$¥öt_hñp
+()
+
+397 
+	`¥ötf
+("\nHowÅo useÅhisÖrogram:\n"
+
+404 
+	`¥öt_avaûabÀ_¥ogøm
+();
+
+405 
+	}
+}
+
+417 * 
+	$gë_ªÆ_«me
+(*
+fuŒ_«me
+)
+
+419 
+i
+ = 0;
+
+420 
+i
+ = 
+	`°æí
+(
+fuŒ_«me
+); i > 0 ; i--)
+
+421 i‡(
+fuŒ_«me
+[
+i
+] == '/')
+
+422  (
+fuŒ_«me
+ + 
+i
++1);
+
+423  
+fuŒ_«me
+;
+
+424 
+	}
+}
+
+427 
+	$maö
+(
+¨gc
+, *
+¨gv
+[])
+
+429 
+i
+ = 0;
+
+430 
+found
+ = 0;
+
+431 
+timevÆ
+ 
+timecou¡
+;
+
+432 
+g_log_⁄
+ = 0;
+
+436 i‡(
+	`check_debug
+())
+
+438 
+	`debug_⁄
+();
+
+441 
+i
+ = 0; i < (
+¥ogøms
+)/(programs[0]); i++) {
+
+442 if(
+	`°rcmp
+(
+¥ogøms
+[
+i
+].
+«me
+, 
+	`gë_ªÆ_«me
+(
+¨gv
+[0])) == 0) {
+
+443 
+	`gëtimeofbegö
+(&
+timecou¡
+);
+
+444 
+¥ogøms
+[
+i
+].
+	`fun˘i⁄
+(
+¨gc
+ - 1, 
+¨gv
+ + 1);
+
+445 
+	`LOG
+("[%s] s≥nd=%ldms", 
+¥ogøms
+[
+i
+].
+«me
+, 
+	`gëtimevÆdiff
+(&
+timecou¡
+));
+
+446 
+found
+ = 1;
+
+451 i‡(0 =
+found
+) {
+
+452 
+	`¥ötf
+("Nÿsuch comm™d:%s\n", 
+¨gv
+[0]);
+
+453 
+	`¥öt_hñp
+();
+
+458 
+	}
+}
+
+	@wdk.h
+
+2 #i‚de‡
+WDK_H
+
+
+3 
+	#WDK_H
+
+
+	)
+
+5 
+	~<°rög.h
+>
+
+6 
+	~<°dio.h
+>
+
+7 
+	~<°dlib.h
+>
+
+8 
+	~<uni°d.h
+>
+
+9 
+	~<sys/ty≥s.h
+>
+
+10 
+	~<sys/°©.h
+>
+
+11 
+	~<sys/waô.h
+>
+
+12 
+	~<sys/io˘l.h
+>
+
+13 
+	~<f˙é.h
+>
+
+14 
+	~<î∫o.h
+>
+
+15 
+	~<dúít.h
+>
+
+16 
+	~<sy¶og.h
+>
+
+17 
+	~<time.h
+>
+
+18 
+	~<sig«l.h
+>
+
+20 
+	~<cdb.h
+>
+
+21 
+	~<shutûs.h
+>
+
+22 
+	~<°rutûs.h
+>
+
+23 
+	~<√tutûs.h
+>
+
+25 
+	#WDK_BIN_VERSION
+ 1
+
+	)
+
+26 
+	#PRINT_TO_CONSOLE
+ 1
+
+	)
+
+29 
+	#˝rötf
+(
+fmt
+, 
+¨gs
+...) do { \
+
+30 
+FILE
+ *
+Â
+ = 
+	`f›í
+("/dev/console", "w"); \
+
+31 i‡(
+Â
+) { \
+
+32 
+	`Ârötf
+(
+Â
+, 
+fmt
+ , ## 
+¨gs
+); \
+
+33 
+	`f˛o£
+(
+Â
+); \
+
+35 } 0)
+
+	)
+
+39 #i‡
+PRINT_TO_CONSOLE
+
+
+40 
+	#LOG
+(
+fmt
+, 
+¨gs
+...) \
+
+42 i‡(
+g_log_⁄
+) {\
+
+43 
+	`˝rötf
+(
+fmt
+, ## 
+¨gs
+); \
+
+44 
+	`˝rötf
+("\n"); \
+
+46 } 0)
+
+	)
+
+48 
+	#LOG
+(
+fmt
+, 
+¨gs
+...) \
+
+50 i‡(
+g_log_⁄
+) \
+
+51 
+	`sy¶og
+(
+LOG_INFO
+, 
+fmt
+, ## 
+¨gs
+); \
+
+52 } 0)
+
+	)
+
+56 
+	swdk_¥ogøm
+ {
+
+57 *
+	m«me
+;
+
+58 *
+	mdes¸ùti⁄
+;
+
+59 (*
+	mfun˘i⁄
+)(
+	m¨gc
+, **
+	m¨gv
+);
+
+65 
+g_log_⁄
+;
+
+68 
+	eweb_°©e
+ {
+
+69 
+	mWEB_STATE_DEFAULT
+=0,
+
+70 
+	mWEB_STATE_ONGOING
+=1,
+
+71 
+	mWEB_STATE_SUCCESS
+=2,
+
+72 
+	mWEB_STATE_FAILURE
+=3,
+
+73 
+	mWEB_STATE_FWSTART
+=4,
+
+76 
+	#WEB_UPLOAD_STATE
+ "/tmp/u∂ﬂd_°©e"
+
+	)
+
+79 
+dump_fûe
+(*
+fûe_∑th
+);
+
+80 
+°r_equÆ
+(*
+°r1
+, *
+°r2
+);
+
+81 
+wdk_¶ìp
+(
+¨gc
+, **
+¨gv
+);
+
+82 
+wdk_≠
+(
+¨gc
+, **
+¨gv
+);
+
+83 
+wdk_cdbª£t
+(
+¨gc
+, **
+¨gv
+);
+
+84 
+wdk_debug
+(
+¨gc
+, **
+¨gv
+);
+
+85 
+wdk_dh˝s
+(
+¨gc
+, **
+¨gv
+);
+
+86 
+wdk_gë_ch™√l
+(
+¨gc
+, **
+¨gv
+);
+
+87 
+wdk_logout
+(
+¨gc
+, **
+¨gv
+);
+
+88 
+wdk_pög
+(
+¨gc
+, **
+¨gv
+);
+
+89 
+wdk_ªboŸ
+(
+¨gc
+, **
+¨gv
+);
+
+90 
+wdk_rouã
+(
+¨gc
+, **
+¨gv
+);
+
+91 
+wdk_w™
+(
+¨gc
+, **
+¨gv
+);
+
+92 
+wdk_m™gmít
+(
+¨gc
+, **
+¨gv
+);
+
+93 
+wdk_°a
+(
+¨gc
+, **
+¨gv
+);
+
+94 
+wdk_°‹
+(
+¨gc
+, **
+¨gv
+);
+
+95 
+wdk_°≠ﬁl
+(
+¨gc
+, **
+¨gv
+);
+
+96 
+wdk_°©us
+(
+¨gc
+, **
+¨gv
+);
+
+97 
+wdk_sy°em
+(
+¨gc
+, **
+¨gv
+);
+
+98 
+wdk_sysupgøde
+(
+¨gc
+, **
+¨gv
+);
+
+99 
+wdk_hâp
+(
+¨gc
+, **
+¨gv
+);
+
+100 
+wdk_sysupgøde_bef‹e
+(
+¨gc
+, **
+¨gv
+);
+
+101 
+wdk_sysupgøde_a·î
+(
+¨gc
+, **
+¨gv
+);
+
+102 
+wdk_time
+(
+¨gc
+, **
+¨gv
+);
+
+103 
+wdk_u≤p
+(
+¨gc
+, **
+¨gv
+);
+
+104 
+wdk_cdbu∂ﬂd
+(
+¨gc
+, **
+¨gv
+);
+
+105 
+wdk_log
+(
+¨gc
+, **
+¨gv
+);
+
+106 
+wdk_logc⁄f
+(
+¨gc
+, **
+¨gv
+);
+
+107 
+wdk_u∂ﬂd
+(
+¨gc
+, **
+¨gv
+);
+
+108 
+wdk_wps
+(
+¨gc
+, **
+¨gv
+);
+
+109 
+wdk_smbc
+(
+¨gc
+, **
+¨gv
+);
+
+115 
+ªadlöe
+(*
+∑th
+, * 
+buf„r
+, 
+buf„r_size
+);
+
+116 
+wrôñöe
+(*
+∑th
+, * 
+buf„r
+);
+
+117 
+≠≥ndlöe
+(*
+∑th
+, * 
+buf„r
+);
+
+118 
+upd©e_u∂ﬂd_°©e
+(
+°©e
+);
+
+121 
+gë_shñl_ªsu…
+(*
+comm™d
+, *
+ªsu…
+, 
+ªsu…_Àn
+);
+
+122 
+gë_£lf_∑th
+(*
+buf
+, 
+Àn
+);
+
+	@wps.c
+
+1 
+	~<˘y≥.h
+>
+
+2 
+	~"ö˛ude/mtc_˛õ¡.h
+"
+
+3 
+	~"wdk.h
+"
+
+6 
+	#WPS_RUN
+ 0
+
+	)
+
+7 
+	#WPS_PASS
+ 1
+
+	)
+
+8 
+	#WPS_FAIL
+ 2
+
+	)
+
+9 
+	#WPS_IDLE
+ 255
+
+	)
+
+12 
+	#START
+ 0
+
+	)
+
+13 
+	#MESG
+ 1
+
+	)
+
+14 
+	#FRAG_ACK
+ 2
+
+	)
+
+15 
+	#DONE
+ 4
+
+	)
+
+16 
+	#FAIL
+ 5
+
+	)
+
+17 
+	#IDLE
+ 255
+
+	)
+
+21 
+	#SEND_M1
+ 0
+
+	)
+
+22 
+	#RECV_M2
+ 1
+
+	)
+
+23 
+	#SEND_M3
+ 2
+
+	)
+
+24 
+	#RECV_M4
+ 3
+
+	)
+
+25 
+	#SEND_M5
+ 4
+
+	)
+
+26 
+	#RECV_M6
+ 5
+
+	)
+
+27 
+	#SEND_M7
+ 6
+
+	)
+
+28 
+	#RECV_M8
+ 7
+
+	)
+
+29 
+	#RECEIVED_M2D
+ 8
+
+	)
+
+30 
+	#WPS_MSG_DONE
+ 9
+
+	)
+
+31 
+	#RECV_ACK
+ 10
+
+	)
+
+32 
+	#WPS_FINISHED
+ 11
+
+	)
+
+33 
+	#SEND_WSC_NACK
+ 12
+
+	)
+
+35 
+	#RECV_M1
+ 13
+
+	)
+
+36 
+	#SEND_M2
+ 14
+
+	)
+
+37 
+	#RECV_M3
+ 15
+
+	)
+
+38 
+	#SEND_M4
+ 16
+
+	)
+
+39 
+	#RECV_M5
+ 17
+
+	)
+
+40 
+	#SEND_M6
+ 18
+
+	)
+
+41 
+	#RECV_M7
+ 19
+
+	)
+
+42 
+	#SEND_M8
+ 20
+
+	)
+
+43 
+	#RECV_DONE
+ 21
+
+	)
+
+44 
+	#SEND_M2D
+ 22
+
+	)
+
+45 
+	#RECV_M2D_ACK
+ 23
+
+	)
+
+48 
+	#AUTH_CAP_OPEN
+ 0x0001
+
+	)
+
+49 
+	#AUTH_CAP_SHARED
+ 0x0002
+
+	)
+
+50 
+	#AUTH_CAP_WEP
+ 0x0004
+
+	)
+
+51 
+	#AUTH_CAP_WPA
+ 0x0008
+
+	)
+
+52 
+	#AUTH_CAP_WPA2
+ 0x0010
+
+	)
+
+53 
+	#AUTH_CAP_WPS
+ 0x0020
+
+	)
+
+54 
+	#AUTH_CAP_LEAP
+ 0x0040
+
+	)
+
+55 
+	#AUTH_CAP_WAPI
+ 0x0080
+
+	)
+
+58 
+	#AUTH_CAP_CIPHER_NONE
+ 0x0000
+
+	)
+
+59 
+	#AUTH_CAP_CIPHER_WEP40
+ 0x0001
+
+	)
+
+60 
+	#AUTH_CAP_CIPHER_WEP104
+ 0x0002
+
+	)
+
+61 
+	#AUTH_CAP_CIPHER_TKIP
+ 0x0004
+
+	)
+
+62 
+	#AUTH_CAP_CIPHER_CCMP
+ 0x0008
+
+	)
+
+63 
+	#AUTH_CAP_CIPHER_SMS4
+ 0x0010
+
+	)
+
+64 
+	#AUTH_CAP_CIPHER_AES_128_CMAC
+ 0x0020
+
+	)
+
+66 
+	#HOSTAPD_CLI_BIN
+ "/u§/sbö/ho°≠d_˛i"
+
+	)
+
+67 
+	#WPS_BSS
+ 1
+
+	)
+
+69 
+	gWPS_AP
+[16] = { 0 };
+
+70 *
+	gAP
+ = 
+WPS_AP
+;
+
+72 
+	$wps_ˇŒback
+(*
+rbuf
+, 
+æí
+)
+
+74 *
+≠
+ = 
+	`°r°r
+(
+rbuf
+, "AP=");
+
+75 
+i
+ = 0, 
+j
+ = 3;
+
+77 
+	`mem£t
+(
+WPS_AP
+, 0, (WPS_AP));
+
+78 i‡(
+≠
+ && ((
+rbuf
+ ==áp) || (*(ap-1) == '\n'))) {
+
+79 
+i
+ < ((
+WPS_AP
+)-1)) {
+
+80 
+WPS_AP
+[
+i
+] = *(
+≠
+ + 
+j
+);
+
+81 i‡((
+WPS_AP
+[
+i
+] == '\n') || (WPS_AP[i] == 0)) {
+
+82 
+WPS_AP
+[
+i
+] = 0;
+
+85 
+i
+++;
+
+86 
+j
+++;
+
+91 
+	}
+}
+
+93 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_gë_mtc_öfo
+()
+
+95 
+MtcPkt
+ *
+∑ckë
+;
+
+96 
+ªt
+ = 
+RET_ERR
+;
+
+98 if((
+∑ckë
+ = 
+	`ˇŒoc
+(1, (
+MtcPkt
+)))) {
+
+99 
+∑ckë
+->
+hód
+.
+ifc
+ = 
+INFC_DAT
+;
+
+100 
+∑ckë
+->
+hód
+.
+›c
+ = 
+OPC_DAT_INFO
+;
+
+101 
+ªt
+ = 
+	`mtc_˛õ¡_ˇŒ
+(
+∑ckë
+, 
+wps_ˇŒback
+);
+
+102 
+	`‰ì
+(
+∑ckë
+);
+
+105  
+ªt
+;
+
+106 
+	}
+}
+
+108 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_do_buâ⁄
+()
+
+110 
+	`wps_gë_mtc_öfo
+();
+
+111 i‡(*
+AP
+) {
+
+112 
+	`exec_cmd2
+("%†-i%†wps_pbc", 
+HOSTAPD_CLI_BIN
+, 
+AP
+);
+
+113 
+	`cdb_£t_öt
+("$wps_°©e", 
+IDLE
+);
+
+114 
+	`cdb_£t_öt
+("$wsc_°©e", 
+START
+);
+
+118 
+	}
+}
+
+120 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_do_pö
+(*
+¨gs
+)
+
+122 
+buf
+[
+SSBUF_LEN
+] = { 0 };
+
+124 
+	`wps_gë_mtc_öfo
+();
+
+125 i‡((*
+AP
+Ë&& 
+	`exec_cmd3
+(
+buf
+, (buf),
+
+126 "%†-i%†wps_check_pö %s", 
+HOSTAPD_CLI_BIN
+, 
+AP
+, 
+¨gs
+) == 0) {
+
+127 i‡(!
+	`°r°r
+(
+buf
+, "FAIL")) {
+
+128 
+	`exec_cmd2
+("%†-i%†wps_pöány %s", 
+HOSTAPD_CLI_BIN
+, 
+AP
+, 
+¨gs
+);
+
+129 
+	`cdb_£t_öt
+("$wps_°©e", 
+IDLE
+);
+
+130 
+	`cdb_£t_öt
+("$wsc_°©e", 
+START
+);
+
+135 
+	}
+}
+
+137 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_do_gípö
+()
+
+139 
+wl_wps_def_pö
+[
+SSBUF_LEN
+] = { 0 };
+
+141 
+	`wps_gë_mtc_öfo
+();
+
+142 i‡((*
+AP
+Ë&& 
+	`exec_cmd3
+(
+wl_wps_def_pö
+, (wl_wps_def_pin),
+
+143 "%†-i%†wps_≠_pöÑ™dom", 
+HOSTAPD_CLI_BIN
+, 
+AP
+) == 0) {
+
+144 i‡(!
+	`°r°r
+(
+wl_wps_def_pö
+, "FAIL")) {
+
+145 
+	`cdb_£t
+("$wl_wps_def_pö", 
+wl_wps_def_pö
+);
+
+146 
+	`exec_cmd
+("/sbin/cdb commit");
+
+151 
+	}
+}
+
+153 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_do_ˇn˚l
+()
+
+155 
+	`wps_gë_mtc_öfo
+();
+
+156 i‡(*
+AP
+) {
+
+157  
+	`exec_cmd2
+("%†-i%†wps_ˇn˚l", 
+HOSTAPD_CLI_BIN
+, 
+AP
+);
+
+161 
+	}
+}
+
+163 * 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_gë_°©e_ty≥
+()
+
+165 
+°©e
+[16];
+
+166 
+wps_cou¡_down
+ = 
+	`cdb_gë_öt
+("$wps_count_down", 0);
+
+167 
+wsc_°©e
+ = 
+	`cdb_gë_öt
+("$wsc_°©e", 
+IDLE
+);
+
+168 
+wps_°©e
+ = 0;
+
+170 
+	`°r˝y
+(
+°©e
+, "Run");
+
+172 
+wsc_°©e
+) {
+
+173 
+FAIL
+:
+
+174 
+wps_°©e
+ = 
+	`cdb_gë_öt
+("$wps_°©e", 
+IDLE
+);
+
+175 i‡((
+wps_°©e
+ =
+RECV_DONE
+Ë|| (wps_°©ê=
+RECV_ACK
+Ë|| (wps_°©ê=
+WPS_MSG_DONE
+)) {
+
+176 
+	`°r˝y
+(
+°©e
+, "Pass");
+
+179 
+	`°r˝y
+(
+°©e
+, "Fail");
+
+181 
+wps_cou¡_down
+--;
+
+182 
+	`cdb_£t_öt
+("$wps_cou¡_down", 
+wps_cou¡_down
+);
+
+183 i‡(
+wps_cou¡_down
+ <= 0) {
+
+184 
+	`cdb_£t_öt
+("$wps_°©e", 
+IDLE
+);
+
+185 
+	`cdb_£t_öt
+("$wsc_°©e", 
+IDLE
+);
+
+188 
+IDLE
+:
+
+189 
+	`°r˝y
+(
+°©e
+, "Idle");
+
+191 
+START
+:
+
+192 
+MESG
+:
+
+193 
+FRAG_ACK
+:
+
+194 
+DONE
+:
+
+199  
+°©e
+;
+
+200 
+	}
+}
+
+202 
+__©åibuã__
+ ((
+unu£d
+)Ë
+	$wps_show_°©us
+()
+
+205 
+wl_bss_ssid
+[
+MSBUF_LEN
+] = { 0 };
+
+206 
+wl_bss_£c_ty≥
+ = 
+	`cdb_gë_¨øy_öt
+("$wl_bss_£c_ty≥", 
+WPS_BSS
+, 0);
+
+207 
+wl_bss_cùhî
+ = 
+	`cdb_gë_¨øy_öt
+("$wl_bss_cùhî", 
+WPS_BSS
+, 0);
+
+208 
+wl_bss_key_mgt
+ = 
+	`cdb_gë_¨øy_öt
+("$wl_bss_key_mgt", 
+WPS_BSS
+, 0);
+
+209 
+wl_bss_wï_ödex
+ = 
+	`cdb_gë_¨øy_öt
+("$wl_bss_wï_ödex", 
+WPS_BSS
+, 0);
+
+210 
+wl_bss_wï_key
+[
+MSBUF_LEN
+] = { 0 };
+
+211 
+wl_bss_w∑_psk
+[
+MSBUF_LEN
+] = { 0 };
+
+212 
+wl_bss_wps_°©e
+ = 
+	`cdb_gë_¨øy_öt
+("$wl_bss_wps_°©e", 
+WPS_BSS
+, 0);
+
+214 
+auth_ˇp_›í
+ = 
+wl_bss_£c_ty≥
+ & 
+AUTH_CAP_OPEN
+;
+
+215 
+auth_ˇp_sh¨ed
+ = 
+wl_bss_£c_ty≥
+ & 
+AUTH_CAP_SHARED
+;
+
+216 
+auth_ˇp_wï
+ = 
+wl_bss_£c_ty≥
+ & 
+AUTH_CAP_WEP
+;
+
+217 
+auth_ˇp_w∑
+ = 
+wl_bss_£c_ty≥
+ & 
+AUTH_CAP_WPA
+;
+
+218 
+auth_ˇp_w∑2
+ = 
+wl_bss_£c_ty≥
+ & 
+AUTH_CAP_WPA2
+;
+
+219 
+auth_ˇp_cùhî_tkù
+ = 
+wl_bss_cùhî
+ & 
+AUTH_CAP_CIPHER_TKIP
+;
+
+220 
+auth_ˇp_cùhî_ccmp
+ = 
+wl_bss_cùhî
+ & 
+AUTH_CAP_CIPHER_CCMP
+;
+
+222 
+myIdÀ
+[] = "Idle";
+
+223 
+key_Àn
+ = 0;
+
+224 *
+key
+ = 
+NULL
+;
+
+225 *
+wps_ªsu…
+ = 
+NULL
+;
+
+226 *
+wps_°©us
+ = 
+	`wps_gë_°©e_ty≥
+();
+
+228 
+	`cdb_gë_¨øy_°r
+("$wl_bss_ssid", 
+WPS_BSS
+, 
+wl_bss_ssid
+, (wl_bss_ssid), "");
+
+229 
+	`cdb_gë_¨øy_°r
+("$wl_bss_wï_key", 
+wl_bss_wï_ödex
+, 
+wl_bss_wï_key
+, (wl_bss_wep_key), "");
+
+230 
+	`cdb_gë_¨øy_°r
+("$wl_bss_w∑_psk", 
+WPS_BSS
+, 
+wl_bss_w∑_psk
+, (wl_bss_wpa_psk), "");
+
+232 i‡((!
+	`°rcmp
+(
+wps_°©us
+, "Pass")) || (!strcmp(wps_status, "Fail"))) {
+
+233 
+wps_ªsu…
+ = 
+wps_°©us
+;
+
+234 
+wps_°©us
+ = 
+myIdÀ
+;
+
+237 
+wps_ªsu…
+ = 
+NULL
+;
+
+240 
+	`¥ötf
+("STATE=%s,", 
+wps_°©us
+);
+
+241 i‡(
+wl_bss_wps_°©e
+ == 2) {
+
+242 
+	`¥ötf
+("CONF=Yes,");
+
+245 
+	`¥ötf
+("CONF=No,");
+
+247 
+	`¥ötf
+("SSID=%s,", 
+wl_bss_ssid
+);
+
+248 i‡(
+wl_bss_key_mgt
+ == 0) {
+
+249 
+	`¥ötf
+("AUTH=");
+
+250 i‡((
+auth_ˇp_w∑
+ > 0Ë&& (
+auth_ˇp_w∑2
+ > 0)) {
+
+251 
+	`¥ötf
+("WPAPSK/WPA2PSK,");
+
+253 i‡(
+auth_ˇp_w∑
+ > 0) {
+
+254 
+	`¥ötf
+("WPAPSK,");
+
+256 i‡(
+auth_ˇp_w∑2
+ > 0) {
+
+257 
+	`¥ötf
+("WPA2PSK,");
+
+259 i‡(
+auth_ˇp_wï
+ > 0) {
+
+260 i‡(
+auth_ˇp_›í
+ > 0) {
+
+261 
+	`¥ötf
+("Open,");
+
+263 i‡(
+auth_ˇp_sh¨ed
+ > 0) {
+
+264 
+	`¥ötf
+("shared,");
+
+268 
+	`¥ötf
+(",");
+
+271 
+	`¥ötf
+("ENCR=");
+
+272 i‡((
+auth_ˇp_cùhî_tkù
+ > 0Ë&& (
+auth_ˇp_cùhî_ccmp
+ > 0)) {
+
+273 
+	`¥ötf
+("TRKP/AES,");
+
+275 i‡(
+auth_ˇp_cùhî_tkù
+ > 0) {
+
+276 
+	`¥ötf
+("TKIP,");
+
+278 i‡(
+auth_ˇp_cùhî_ccmp
+ > 0) {
+
+279 
+	`¥ötf
+("AES,");
+
+281 i‡(
+auth_ˇp_wï
+ > 0) {
+
+282 
+	`¥ötf
+("WEP,");
+
+285 
+	`¥ötf
+("None,");
+
+288 
+	`¥ötf
+("KEYIDX=%d,", 
+wl_bss_wï_ödex
+);
+
+289 i‡((
+auth_ˇp_cùhî_tkù
+ > 0Ë|| (
+auth_ˇp_cùhî_ccmp
+ > 0)) {
+
+290 
+key
+ = 
+wl_bss_w∑_psk
+;
+
+292 i‡(
+auth_ˇp_wï
+ > 0) {
+
+293 
+key
+ = 
+wl_bss_wï_key
+;
+
+295 i‡(
+key
+) {
+
+296 
+key_Àn
+ = 
+	`°æí
+(
+key
+);
+
+297 
+	`¥ötf
+("Key=");
+
+298 
+key_Àn
+-- > 0) {
+
+299 
+	`¥ötf
+("%x", *
+key
+++);
+
+301 
+	`¥ötf
+(",");
+
+304 
+	`¥ötf
+("Key=,");
+
+309 
+	`¥ötf
+("AUTH=,ENCR=,KEYIDX=,KEY=,");
+
+312 
+	`¥ötf
+("UUID=,RESULT=%s", (
+wps_ªsu…
+) ? wps_result : "");
+
+315 
+	}
+}
+
+317 
+	$wdk_wps
+(
+¨gc
+, **
+¨gv
+)
+
+319 
+îr
+ = -1;
+
+321 if(
+¨gc
+ == 2) {
+
+322 i‡(
+	`°rcmp
+("buâ⁄", 
+¨gv
+[1]) == 0) {
+
+323 
+	`wps_do_buâ⁄
+();
+
+324 
+îr
+ = 0;
+
+325 } i‡(
+	`°rcmp
+("ˇn˚l", 
+¨gv
+[1]) == 0) {
+
+326 
+	`wps_do_ˇn˚l
+();
+
+327 
+îr
+ = 0;
+
+328 } i‡(
+	`°rcmp
+("gípö", 
+¨gv
+[1]) == 0) {
+
+329 
+	`wps_do_gípö
+();
+
+330 
+îr
+ = 0;
+
+331 } i‡(
+	`°rcmp
+("°©us", 
+¨gv
+[1]) == 0) {
+
+332 
+	`wps_show_°©us
+();
+
+333 
+îr
+ = 0;
+
+335 } if(
+¨gc
+ == 3) {
+
+336 i‡(
+	`°rcmp
+("pö", 
+¨gv
+[1]) == 0) {
+
+337 
+	`wps_do_pö
+(
+¨gv
+[2]);
+
+338 
+îr
+ = 0;
+
+342 i‡(!
+îr
+) {
+
+346 
+	`¥ötf
+("usage:/lib/wdk/wps [0|1] [button/pin/cancel/genpin/status]\n");
+
+347 
+	`¥ötf
+("/lib/wdk/wps [0|1] [pinÖincode]\n");
+
+350 
+	}
+}
+
+	@
+1
+.
+0
+29
+241
+ap.c
+cdbreset.c
+cdbupload.c
+debug.c
+dhcps.c
+get_channel.c
+http.c
+log.c
+logconf.c
+logout.c
+mangment.c
+ping.c
+reboot.c
+route.c
+sleep.c
+smbc.c
+sta.c
+stapoll.c
+status.c
+stor.c
+system.c
+sysupgrade.c
+time.c
+upload.c
+upnp.c
+wan.c
+wdk.c
+wdk.h
+wps.c

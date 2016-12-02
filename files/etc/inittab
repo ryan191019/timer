@@ -1,0 +1,5 @@
+::sysinit:/usr/bin/mtc boot
+::shutdown:/usr/bin/mtc shutdown
+tts/0::askfirst:/bin/ash --login
+ttyS0::askfirst:/bin/ash --login
+tty1::askfirst:/bin/ash --login

@@ -1,0 +1,12 @@
+#!/bin/sh
+# top level export PPP_IFACE PPP_TTY PPP_SPEED PPP_LOCAL PPP_REMOTE PPP_IPPARAM
+
+. /etc/cdb.sh
+. /etc/rdb.sh
+
+
+config_set wanif_state ${STATE_CONNECTED}
+
+# original position : package/ppp/files/etc/ppp/ip-up.d
+#/etc/init.d/wan_serv up
+mtc_cli wanipup

@@ -1,0 +1,523 @@
+#!/bin/sh
+. /etc/cdb.sh
+
+ap_pid_file="/var/run/hostapd.pid"
+ap_pid_file_rename="/var/run/hostapd.rename"
+
+gzip_fail_log ()
+{
+	config_get omicfg_log_mode omicfg_log_mode
+	if [ "$omicfg_log_mode" -gt "0" ]; then
+		killall -TERM syslogd
+		if [ "$omicfg_log_mode" -gt "1" ]; then
+			for i in `seq -w 0 99`
+			do
+				if [ -f "/www/omnicfg_log${i}.gz" ]; then
+					continue
+				else
+					mv /tmp/omnicfg_log.gz "/www/omnicfg_log${i}.gz"
+					break
+				fi
+			done
+		else
+			rm -f /www/omnicfg_log00.gz
+			mv /tmp/omnicfg_log.gz /www/omnicfg_log00.gz
+		fi
+	fi
+}
+
+omnicfg_cdb_get()
+{
+	cdb_data=""
+	[ "$#" -lt "2" ] && echo usage: omnicfg_cdb_get output_variable default_value && exit 1
+
+	config_get cdb_data "$1"
+	cdb_data=$( config_chk "$cdb_data" )
+	[ -z "$cdb_data" ] && cdb_data="$2"
+
+	echo $cdb_data
+}
+
+disable_kill_ap()
+{
+	[ "$FROM_IOS" != "1" ] && return
+	config_get op_work_mode op_work_mode
+	if [ "$op_work_mode" == "8" -o "$op_work_mode" == "9" ]; then
+		mv -f $ap_pid_file $ap_pid_file_rename
+	fi
+}
+
+enable_kill_ap()
+{
+	[ "$FROM_IOS" != "1" ] && return
+	mv -f $ap_pid_file_rename $ap_pid_file
+}
+
+wait_timeout()
+{
+	omi_time_to_kill_ap=$(omnicfg_cdb_get omi_time_to_kill_ap "0")
+
+	while [ "$omi_time_to_kill_ap" -gt "0" ]
+	do
+		sleep 1
+		omi_time_to_kill_ap=$(($omi_time_to_kill_ap - 1))
+		omi_time_to_kill_ap_tmp=$(omnicfg_cdb_get omi_time_to_kill_ap "0")
+		if [ "$omi_time_to_kill_ap_tmp" -lt "$omi_time_to_kill_ap" ]
+		then
+			omi_time_to_kill_ap=$omi_time_to_kill_ap_tmp
+		fi
+	done
+}
+
+zero_counter()
+{
+	config_set omi_time_to_kill_ap "0"
+	exit 0
+}
+
+kill_ap()
+{
+	[ "$FROM_IOS" != "1" ] && return
+	config_get op_work_mode op_work_mode
+	if [ "$op_work_mode" == "8" -o "$op_work_mode" == "9" ]; then
+		wait_timeout	
+		killall hostapd
+	fi
+}
+
+redo()
+{
+	[ "$FROM_IOS" == "1" -a -n "$REMOTE_ADDR" ] && route del "$REMOTE_ADDR" br0
+	config_get omi_ap_scan_status omi_ap_scan_status
+	if [ "$omi_ap_scan_status" == "1" ]; then
+		config_set omi_result 4
+		logger [omnicfg]password check error
+	fi
+
+	omicfg_group_cmd_en=$(omnicfg_cdb_get omicfg_group_cmd_en "0")
+	[ "$omicfg_group_cmd_en" -gt "0" ] && restore || config_set omicfg_config_enable 1
+
+	fail_voice
+	logger [omnicfg]restart omnicfg in redo function
+	gzip_fail_log
+	pid=`cat /var/run/hostapd.pid`
+	kill -SIGUSR2 $pid
+
+	exit 0
+}
+
+restart()
+{
+	#/etc/init.d/ocfg stop
+	mtc_cli ocfg stop
+	[ "$FROM_IOS" == "1" ] && wait_timeout
+	[ "$MODE" -eq "9" ] && ifconfig br0 down
+	config_set op_work_mode 1
+	omicfg_group_cmd_en=$(omnicfg_cdb_get omicfg_group_cmd_en "0")
+	[ "$omicfg_group_cmd_en" -gt "0" ] && config_set omicfg_config_enable 0 || config_set omicfg_config_enable 1
+	
+	#/etc/init.d/wlan stop
+	mtc_cli wl stop
+	#/etc/init.d/wan stop
+	mtc_cli wan stop
+	#/etc/init.d/workmode restart
+	mtc_cli op restart
+	#/etc/init.d/wlan start
+	mtc_cli wl start
+	if [ "$FROM_IOS" == "1" ]
+	then
+		enable_kill_ap
+		pid=`cat /var/run/hostapd.pid`
+		kill -SIGUSR2 $pid
+	fi
+	#/etc/init.d/ocfg start
+	mtc_cli ocfg start
+
+	[ "$omicfg_group_cmd_en" -gt "0" ] && restore
+	logger [omnicfg]restart omnicfg in restart function
+	gzip_fail_log
+
+	fail_voice
+
+#	cdb commit
+	exit 0
+}
+
+apply () 
+{
+	omnicfg_wifi_try_cnt=$( omnicfg_cdb_get omicfg_wifi_try_cnt '0' )
+
+        config_set omi_wpa_supp_state 0
+        config_set omi_wpa_supp_result 0
+        config_set omi_wpa_supp_retry $omnicfg_wifi_try_cnt
+        config_set omicfg_config_enable 0
+        config_set omi_config_mode 0
+
+	logger [omnicfg]apply start
+
+	#/etc/init.d/ocfg stop
+	mtc_cli ocfg stop
+	#/etc/init.d/wan stop
+	mtc_cli wan stop
+	#/etc/init.d/wlan stop
+	mtc_cli wl stop
+	#/etc/init.d/workmode restart
+	mtc_cli op restart
+	#/etc/init.d/wlan start
+	mtc_cli wl start
+	#/etc/init.d/lan start
+	mtc_cli lan start
+	#/etc/init.d/ocfg start 1
+	mtc_cli ocfgarg
+}
+
+restore()
+{
+	fail_voice
+
+	config_set omicfg_config_enable 0
+	config_set omi_config_mode 0
+	omicfg_omi_work_mode=$( omnicfg_cdb_get omi_work_mode '0' )
+	if [ "$omicfg_omi_work_mode" -gt "1" ]; then
+		config_set omi_restore_apply 1
+		cdbak restore
+		config_set omi_result 2
+		logger [omnicfg]restore to last success config
+		apply
+		[ "$MODE" -eq "9" ] && ifconfig br0 down
+	else
+		mtc_cli lan restart
+		mtc_cli dns restart
+		logger [omnicfg]disable omnicfg when timeout or error
+		pid=`cat /var/run/hostapd.pid`
+		kill -SIGUSR2 $pid
+	fi
+
+	#/etc/init.d/ocfg restart
+	mtc_cli ocfg restart
+
+	cdb commit
+	gzip_fail_log
+	exit 0
+}
+
+check()
+{
+#	config_get omicfg_wifi_conn_time omicfg_wifi_conn_time
+	omicfg_wifi_conn_time=$( omnicfg_cdb_get omicfg_wifi_conn_time '0' )
+	if [ "$omicfg_wifi_conn_time" != "0" ]; then
+		logger [omnicfg]check connect
+		time_count=`cat /proc/uptime | cut -d '.' -f1`
+		time_up=$(($time_count + $omicfg_wifi_conn_time))
+		while [ "$time_count" -le "$time_up" ]
+		do
+			config_get omi_wpa_supp_state omi_wpa_supp_state
+			config_get omi_wpa_supp_result omi_wpa_supp_result
+#			config_get omi_wpa_supp_retry omi_wpa_supp_retry
+#			config_get omicfg_wifi_try_cnt omicfg_wifi_try_cnt
+		
+#			echo $omi_wpa_supp_state $omi_wpa_supp_result $omi_wpa_supp_retry $omicfg_wifi_try_cnt
+			if [ "$omi_wpa_supp_result" == "2" ]; then
+				config_set omi_result 4
+				logger [omnicfg]authenticate fail
+				restart
+			elif [ "$omi_wpa_supp_result" == "3" ]; then
+				config_set omi_result 3
+				logger [omnicfg]wpa_supplicant cannot found AP
+				restart
+			elif [ "$omi_wpa_supp_result" == "1" ]; then
+				logger [omnicfg]Connect complete
+				break
+			fi
+		
+			sleep 1
+			time_count=`cat /proc/uptime | cut -d '.' -f1`
+		done
+		if [ "$time_count" -gt "$time_up" ]; then
+			config_set omi_result 7
+			logger [omnicfg]Connect timeout
+			restart
+		fi
+	fi
+	
+#	config_get omicfg_ip_conn_time omicfg_ip_conn_time
+	omicfg_ip_conn_time=$( omnicfg_cdb_get omicfg_ip_conn_time '0' )
+	if [ "$omicfg_ip_conn_time" != "0" ]; then
+		logger [omnicfg]check ip address
+		time_count=`cat /proc/uptime | cut -d '.' -f1`
+		time_up=$(($time_count + $omicfg_ip_conn_time))
+		while [ "$time_count" -le "$time_up" ]
+		do
+#			config_get wanif_ip wanif_ip
+#			config_get wanif_gw wanif_gw
+			config_get op_work_mode op_work_mode
+			if [ "$op_work_mode" == "4" ]; then
+				wanif_ip=`ifconfig br0 | awk '/ addr/&&!/inet6/{ sub(/^.* addr[:| ]/,""); print $1}'`
+			elif [ "$op_work_mode" == "3" -o "$op_work_mode" == "9" ]; then
+				wanif_ip=`ifconfig br1 | awk '/ addr/&&!/inet6/{ sub(/^.* addr[:| ]/,""); print $1}'`
+			else
+				break
+			fi
+			wanif_gw=`route -n | awk '/UG/{ print $2 }'`
+#			echo $wanif_ip $wanif_gw
+			[ -n "$wanif_ip" -a -n "$wanif_gw" ] && break
+			time_count=`cat /proc/uptime | cut -d '.' -f1`
+		done
+		if [ "$time_count" -gt "$time_up" ]; then
+			config_set omi_result 5
+			logger [omnicfg]ip not found
+			restart
+		fi
+		logger [omnicfg]get ip\("$wanif_ip"\) gateway\("$wanif_gw"\)
+
+#		br0_inet=`ifconfig br0 | awk '/ 'addr'/&&!/inet6/{ sub(/^.* 'addr'[:| ]/,"");print $1}'`
+#		echo br0_inet $br0_inet	
+#		while [ "$time_count" -le "$time_up" ]
+#		do
+#			ping_result=`ping -I br1 -q -c 4 -w 1 $wanif_gw`
+#			ping_result=`echo $ping_result | cut -d '-' -f7 | cut -d ',' -f3 | cut -d '%' -f1`
+#			echo ping_result $ping_result
+#			[ "$ping_result" -lt "100" ] && break
+#			if [ "$wanif_gw" == "$br0_inet" ]
+#			then
+#				wanif_gw_mac=`arp -a | awk /$wanif_gw/'{print $4}'`
+#				echo wanif_gw_mac $wanif_gw_mac
+#				[ -n "$wanif_gw_mac" -a "$wanif_gw_mac" != '<incomplete>' ] && break
+#			fi
+#			time_count=`cat /proc/uptime | cut -d '.' -f1`
+#		done
+#		if [ "$time_count" -gt "$time_up" ]; then
+#			config_set omi_result 6
+#			logger [omnicfg]ip ping test fail
+#			restart
+#		fi
+#		logger [omnicfg]ip ping test success
+	fi
+	
+	logger [omnicfg]check done success
+
+#	config_get smrt_change smrt_change
+#	if [ $smrt_change != 1 ]; then
+#		cdb commit
+#	fi
+#	/etc/init.d/ocfg restart
+}
+
+start_syslogd()
+{
+	config_get omicfg_log_mode omicfg_log_mode
+	[ "$omicfg_log_mode" -gt "0" ] &&  syslogd -cn | gzip > /tmp/omnicfg_log.gz &
+}
+
+stop_syslogd()
+{
+	config_get omicfg_log_mode omicfg_log_mode
+	[ "$omicfg_log_mode" -gt "0" ] && killall -TERM syslogd
+}
+
+log_fail_in_config()
+{
+	config_get op_work_mode op_work_mode
+	if [ "$op_work_mode" != "8" -a "$op_work_mode" != "9" ]; then
+        mtc_cli lan restart
+        mtc_cli dns restart
+    fi
+    gzip_fail_log
+	start_syslogd
+}
+
+config () {
+#	cdbak save
+
+	logger [omnicfg]config MODE\("$MODE"\) SSID\("$SSID"\) PASS\("$PASS"\)
+	voice cfg_done
+
+	config_set omicfg_sniffer_enable 0
+	config_set omi_restore_apply 0
+	[ -z "${SSID}" ] || config_setraw wl_bss_ssid2 "${SSID}"
+	[ -z "${NAME}" ] || config_set ra_name "${NAME}"
+			
+	config_set wl_bss_bssid2 ${BSSID}	
+
+	config_set omi_ap_scan_status 0	
+	#scan
+	airkiss scan ${SSID} ${PASS}
+	scan_result=$?
+	#AP_NOT_FOUND   0
+	#AP_FOUND       1
+	#AP_PASS_ERROR  2
+	#AP_SEC_ERROR   3
+	[ $scan_result == 0 ] && {
+		config_set omi_result 3
+		config_set omi_ap_scan_status 2
+		logger [omnicfg]Can not found AP
+		redo
+	}
+
+	config_set omi_ap_scan_status 1           
+	logger [omnicfg]Found AP
+
+	[ $scan_result != 1 ] && redo                    
+	
+#	echo ${sec} $pcipher $gcipher
+
+	config_set op_work_mode ${MODE}
+
+	disable_kill_ap
+	apply
+	check
+
+	cdb commit
+	config_set omi_result 2
+	logger [omnicfg]config done success
+	stop_syslogd
+	enable_kill_ap
+	kill_ap
+	[ "$MODE" -eq "9" ] && ifconfig br0 down
+	voice connected
+	#/etc/init.d/ocfg restart 1
+	mtc_cli ocfg stop
+	mtc_cli ocfgarg
+	exit 0
+}
+
+json_append_str()
+{
+	[ "$#" -lt "3" ] && echo ""
+	[ -z "$1" ] && echo \"$2\":\"$3\" || echo $1,\"$2\":\"$3\"
+}
+
+json_append_int()
+{
+	[ "$#" -lt "3" ] && echo ""
+	[ -z "$1" ] && echo \"$2\":$3 || echo $1,\"$2\":$3
+}
+
+state()
+{
+	local omicfg_timeout_period=0
+
+	state_str=""
+
+	op_work_mode=$( omnicfg_cdb_get op_work_mode '0' )
+	state_str=$( json_append_str "$state_str" 'op_work_mode' "$op_work_mode" )
+	omi_config_mode=$( omnicfg_cdb_get omi_config_mode '0' )
+	if [ "$omi_config_mode" == "1" ]
+	then
+		omicfg_sniffer_timeout=$( omnicfg_cdb_get omicfg_sniffer_timeout '0' )
+		[ "$omicfg_sniffer_timeout" -le "0" ] && supporttimeout="disable" || supporttimeout="enable"
+	else
+		omicfg_timeout_period=$( omnicfg_cdb_get omicfg_timeout_period "-1" )
+		[ "$omicfg_timeout_period" == "0" ] && supporttimeout="disable" || supporttimeout="enable"
+	fi
+	state_str=$( json_append_str "$state_str" 'SupportTimeout' "$supporttimeout" )
+
+	config_get omicfg_config_enable omicfg_config_enable
+	if [ "$omicfg_config_enable" -gt "0" ]; then
+		omi_target_timeout=$( omnicfg_cdb_get omi_target_timeout '0' )
+		uptime=`cat /proc/uptime | cut -d '.' -f1`
+		remaintime=$(( $omi_target_timeout - $uptime ))
+		[ $remaintime -le 0 ] && remaintime=0
+	elif [ "$omicfg_config_enable" == "0" -a "$omi_config_mode" == "2" ]
+	then
+		omi_target_timeout=$( omnicfg_cdb_get omi_target_timeout '0' )
+		uptime=`cat /proc/uptime | cut -d '.' -f1`
+		remaintime=$(( $omi_target_timeout - $uptime ))
+		[ "$remaintime" -le "0" ] && remaintime=0
+	else
+		remaintime=0
+	fi
+	state_str=$( json_append_int "$state_str" 'RemainTime' "$remaintime" )
+
+	omi_result=$( omnicfg_cdb_get omi_result '0' )
+	state_str=$( json_append_int "$state_str" 'WifiState' "$omi_result" )
+
+	omi_work_mode=$( omnicfg_cdb_get omi_work_mode '0' )
+	state_str=$( json_append_int "$state_str" 'omi_work_mode' "$omi_work_mode" )
+
+	omi_restore_apply=$( omnicfg_cdb_get omi_restore_apply '0' )
+	state_str=$( json_append_int "$state_str" 'omi_restore_apply' "$omi_restore_apply" )
+
+	echo {$state_str}
+}
+
+remove_log()
+{
+	rm -f /www/omnicfg_log??.gz
+}
+
+reload ()
+{
+	config_set omi_iw_channel 0
+
+	pid=`cat /var/run/hostapd.pid`
+	kill -SIGUSR2 $pid
+
+	#/etc/init.d/ocfg start
+	mtc_cli ocfg start
+}
+
+turn_off ()
+{
+	#/etc/init.d/ocfg stop
+	mtc_cli ocfg stop
+	wd smrtcfg stop
+	config_set omi_result 0
+	config_set omi_config_mode 0
+	config_set omi_target_timeout 0
+}
+
+voice ()
+{
+    # kill aplay
+	if [ "$(pidof aplay)" ]; then
+	    killall -KILL aplay
+	fi
+
+	case $1 in
+		"trigger") mcc_dbus omf_trigger;;
+		"cfg") mcc_dbus omf_cfg;;
+		"cfg_time_out") mcc_dbus omf_cfg_time_out;;
+		"cfg_done") mcc_dbus omf_cfg_done;;
+		"cfg_direct") mcc_dbus omf_cfg_direct;;
+		"cfg_direct_time_out") mcc_dbus omf_cfg_direct_time_out;;
+		"cfg_fail") mcc_dbus omf_cfg_fail;;
+		"connected") mcc_dbus omf_connected;;
+		# fail voice
+		"ap_not_found") mcc_dbus omf_ap_not_found;;
+		"pass_error") mcc_dbus omf_pass_error;;
+		"no_ip_got") mcc_dbus omf_no_ip_got;;
+		"ip_connect_fail") mcc_dbus omf_ip_connect_fail;;
+		"connect_time_out") mcc_dbus omf_connect_time_out;;
+	esac
+}
+
+fail_voice ()
+{
+	# show fail voice
+	config_get omi_result omi_result
+	echo restart omi_result $omi_result
+	case $omi_result in
+		"3") voice ap_not_found;;
+		"4") voice pass_error;;
+		"5") voice no_ip_got;;
+		"6") voice ip_connect_fail;;
+		"7") voice connect_time_out;;
+	esac
+}
+
+#wd recover
+
+case $1 in
+	"done") config;;
+	"timeout") restore;;
+	"state") state;;
+	"zero_counter") zero_counter;;
+	"remove_log") remove_log;;
+	"start_log") start_syslogd;;
+	"stop_log") stop_syslogd;;
+	"sniffer_timeout") log_fail_in_config;;
+	"reload") reload;;
+	"stop") turn_off;;
+	"voice") voice $2;;
+esac

@@ -1,0 +1,89 @@
+#!/bin/sh
+. /etc/cdb.sh
+SUCCESS=0
+finish () {
+	[ $SUCCESS = 1 ] && {
+		config_get smrt_opmode smrt_opmode
+		config_set op_work_mode $smrt_opmode
+	} 
+	config_set smrt_enable 0
+
+	/etc/init.d/wlan stop 
+	/etc/init.d/workmode start
+	/etc/init.d/wlan start
+	/etc/init.d/lan start 
+	/etc/init.d/wan start
+
+	config_get smrt_change smrt_change
+	if [ $smrt_change != 1 ]; then
+		cdb commit
+	fi
+}
+
+ready () {
+	[ -z "${SSID}" ] || config_set wl_bss_ssid2 "${SSID}"
+	[ -z "${NAME}" ] || config_set ra_name "${NAME}"
+			
+	config_set wl_bss_bssid2 ${BSSID}	
+	
+	#scan
+	for i in `seq 1 5`
+	do
+		/lib/wdk/ap scan
+		/lib/wdk/ap result > /tmp/result
+	
+		rule=`cat /tmp/result | grep "${SSID}" | grep "${BSSID}"`
+		[ -n "${rule}" ] && break
+	done
+	rule=`echo $rule | sed -e 's/&/;/g'`
+	eval $rule
+	
+	sec=$(($sec&0x7))
+	if [ ${sec} = 0 ]; then
+		config_set wl_bss_sec_type2 0
+		config_set wl_bss_cipher2 0
+		config_set wl_bss_wep_1key2 0
+		config_set wl_bss_wep_2key2 0
+		config_set wl_bss_wep_3key2 0
+		config_set wl_bss_wep_4key2 0
+		config_set wl_bss_wpa_psk2 0
+	fi
+	
+	if [ ${sec} -gt 1 ]; then
+		if [ $pcipher = 8 ]; then
+			config_set wl_bss_cipher2 4
+		elif [ $pcipher = 16 ]; then
+			config_set wl_bss_cipher2 8
+		elif [ $pcipher = 24 ]; then
+			config_set wl_bss_cipher2 12
+		fi
+		[ -z "${PASS}" ] || config_set wl_bss_wpa_psk2 ${PASS}
+	elif [ ${sec} = 1 ]; then
+		[ -z "${PASS}" ] || {
+			config_set wl_bss_wep_1key2 $PASS
+			config_set wl_bss_wep_2key2 $PASS
+			config_set wl_bss_wep_3key2 $PASS
+			config_set wl_bss_wep_4key2 $PASS
+		}
+	fi
+	
+	if [ ${sec} = 1 ]; then
+		config_set wl_bss_sec_type2 4
+	elif [ ${sec} = 2 ]; then
+		config_set wl_bss_sec_type2 8
+	elif [ ${sec} = 4 ]; then
+		config_set wl_bss_sec_type2 16
+	elif [ ${sec} = 6 ]; then
+		config_set wl_bss_sec_type2 24
+	fi
+	config_set smrt_done 1
+	SUCCESS=1
+	finish;
+}
+
+wd recover
+case $1 in
+	"done") ready;;
+	"timeout") finish;;
+esac
+#/lib/wdk/commit

@@ -1,0 +1,85 @@
+#!/bin/sh
+. /etc/cdb.sh
+
+time_to_kill_ap="60"
+
+fork() {
+#	echo func_fork
+	logger [omnicfg_apply]apply to MODE\("$1"\) SSID\("$2"\) PASS\("$3"\)
+	config_set omi_result 1
+	config_get op_work_mode op_work_mode
+	[ "$op_work_mode" == "3" ] && killall wpa_supplicant
+	PATH=/usr/sbin:/usr/bin:/sbin:/bin:/lib/wdk \
+	SSID="$2" PASS="$3" MODE="$1" NAME= BSSID= \
+	/lib/wdk/omnicfg done
+
+#	/etc/init.d/ocfg restart
+
+	exit 0
+}
+
+terminate_apply()
+{
+	logger [omnicfg_apply]terminate_apply
+	config_set omi_time_to_kill_ap "0"
+	exit 1
+}
+
+check_vendor_phase()
+{
+	config_getraw sw_omnicfg_vendor_key sw_omnicfg_vendor_key
+	logger [omnicfg_apply]check_vendor_phase arg1\("$1"\) sw_omnicfg_vendor_key\("$sw_omnicfg_vendor_key"\)
+	if [ -z "$sw_omnicfg_vendor_key" -o "$sw_omnicfg_vendor_key" == "!ERR" ]
+	then
+		[ "$1" != "MONTAGE" ] && echo '!ERR(1)' && terminate_apply
+	else
+		[ "$1" != "$sw_omnicfg_vendor_key" ] && echo '!ERR(1)' && terminate_apply
+	fi
+	echo '!OK(0)'
+}
+
+ios_apply_enc_base64()
+{
+	logger [omnicfg_apply]ios_apply_enc_base64 arg2\("$2"\)
+	[ -z "$2" ] && echo '!ERR(0)' && terminate_apply
+	
+	# decode base64
+	echo begin-base64 644 /tmp/ios_apply_decode > /tmp/ios_apply_encode
+	echo $2 >> /tmp/ios_apply_encode
+	echo ==== >> /tmp/ios_apply_encode
+	uudecode /tmp/ios_apply_encode
+
+	ssid=`egrep ^ssid= /tmp/ios_apply_decode | cut -b 6-`
+	pass=`egrep ^pass= /tmp/ios_apply_decode | cut -b 6-`
+	phase=`egrep ^phase= /tmp/ios_apply_decode | cut -b 7-`
+
+	# printf the count and text of arguments
+	# the count should minus the number of the new line charater("\n")
+#	printf $((`echo "$ssid" | wc -c` - 1)): && echo "'""$ssid""'"
+#	printf $((`echo "$pass" | wc -c` - 1)): && echo "'""$pass""'"
+#	printf $((`echo "$phase" | wc -c` - 1)): && echo "'""$phase""'"
+	rm -f /tmp/ios_apply_decode /tmp/ios_apply_encode
+
+	check_vendor_phase "$phase"
+
+	[ -n "$REMOTE_ADDR" ] && route add "$REMOTE_ADDR" br0
+
+	config_set omi_time_to_kill_ap "$time_to_kill_ap"
+	FROM_IOS=1
+	export FROM_IOS
+	fork "$1" "$ssid" "$pass" &
+	exit 0
+}
+
+# pseudo ok for duplicate apply command
+omnicfg_apply_pid=`pidof omnicfg_apply`
+if [ `echo $omnicfg_apply_pid | wc -w` -gt "1" ]; then
+	logger [omnicfg_apply]duplicate apply command
+	echo '!OK(0)'
+	exit 0
+fi
+
+[ "$1" == "base64" ] && ios_apply_enc_base64 $2 $3
+FROM_IOS=0
+export FROM_IOS
+fork "$1" "$2" "$3" &

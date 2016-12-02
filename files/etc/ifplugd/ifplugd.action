@@ -1,0 +1,48 @@
+#!/bin/sh
+
+#. /etc/if.sh
+. /etc/cdb.sh
+
+#local wan_prog="/etc/init.d/wan"
+# at package/montage/rootfs/src/files/etc/ifplugd
+# wan start stop restart
+
+rule=`mtc_cli info`
+rule=`echo -e "$rule" | tr '\n' ';'`
+eval $rule
+config_get sys_funcmode sys_funcmode
+config_get op_work_mode op_work_mode
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+	echo "ifplugd error($1)($2)"
+fi
+
+[ $2 = "up" ] && {
+	[ ${sys_funcmode} -ne 0 ] && return 0
+	if [ $OMODE -eq 6 ]; then
+		echo "action up: ether plug-in($1)"
+		#${wan_prog} restart
+		mtc_cli wan restart
+	else
+		#[ $1 = $PLUGIF ] && ${wan_prog} restart
+		[ $1 = $IFPLUGD ] && mtc_cli wan restart
+	fi
+	return 0
+}
+
+[ $2 = "down" ] && {
+	[ ${sys_funcmode} -ne 0 ] && return 0
+	if [ $OMODE -eq 6 ]; then
+
+		echo "action down: ether plug-out($1)"
+		if [ $WMODE -ne 9 ]; then
+			echo "action down: change to mobile 3G mode"
+			#${wan_prog} start
+			mtc_cli wan start
+		fi
+	else
+		#[ $1 = $PLUGIF ] && ${wan_prog} stop
+		[ $1 = $IIFPLUGD ] && mtc_cli wan stop
+	fi
+	return 0
+}
